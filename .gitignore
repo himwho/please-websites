@@ -72,7 +72,6 @@ Thumbs.db
 *.sqlite
 
 # ignore compiled files
-*.com
 *.class
 *.dll
 *.exe
