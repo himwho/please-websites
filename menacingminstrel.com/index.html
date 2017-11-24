@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en-US">
+
+<head>
+<title>Menacing Minstrel</title>
+
+<style type="text/css" media="screen">
+/* basic page layout */
+body{}
+div#page{ width: 600px; margin: 0 auto; }
+a{ color: #09f; text-decoration: none; }
+
+<style type="text/css" media="screen">
+	.guess_box{
+		width:150px;
+		height:50px;
+		position:relative;
+		top:10px;
+		left:10px;
+		background:white;
+		opacity:.8;
+		z-index:55;
+			}
+
+/* The "stage" */
+div#stage{
+overflow:hidden;
+z-index:50;	 
+position: relative; /* necessary to do absolute positioning of the image relative to this div's position */
+
+/* set div's size and layout */
+width: 100%;
+height: 1000px;
+
+/* put a border around it so we can see where it ends */
+border: 1px solid #ccc;
+}
+
+/* The image that is following the mouse */
+img#follower{ position: absolute; }
+
+</style>
+
+<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+<script type="text/javascript">
+// Set up a 30 Hz frame rate
+frameRate    =  30;
+timeInterval = Math.round( 1000 / frameRate );
+relMouseX    = 0;
+relMouseY    = 0;
+
+$(document).ready( function () {
+  // get the stage offset
+  offset = $('#stage').offset();
+
+  // start calling animateFollower at the 'timeInterval' we calculated above
+  atimer = setInterval( "animateFollower()", timeInterval );
+} );
+
+// track and save the position of the mouse
+$(document).mousemove( function(e) {
+  mouseX = e.pageX;
+  mouseY = e.pageY;
+  relMouseX = mouseX - offset.left;
+  relMouseY = mouseY - offset.top;
+
+  // display the current mouse positions
+  $('#mouse_x-trace').text( mouseX );
+  $('#mouse_y-trace').text( mouseY );
+} );
+
+// move the image where the mouse is
+// this function is called by the setInterval command above to run
+// at a rate of 30 frames per second
+function animateFollower() {
+  	$('#follower').css('left', relMouseX);
+	$('#follower').css('top', relMouseY);
+}
+</script>
+</head>
+
+<body>
+
+<div id="stage">
+<img src="imgs/gtr2.png" id="follower" alt="minstrel" />
+</div>
+
+<div class="guess_box">
+	<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	<br>
+	<a href="http://www.pleasewebsite.com">Back to PleaseWebsite</a>
+</div>
+
+</body>
+</html>
