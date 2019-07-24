@@ -1,0 +1,60 @@
+html {overflow-x:hidden;}
+.guess_box{
+	width:150px;
+	position:absolute;
+	top:10px;
+	left:10px;
+	margin:10px;
+	background:white;
+	opacity:.8;
+	z-index:100;
+}
+.egg_box{
+	width:50;
+	height:59;
+	position:fixed;
+	bottom:35px;
+	right:35px;
+	opacity:.4;
+	z-index:100;
+}
+body{
+	background-color:white;
+	font-family:arial;
+	margin:0;
+	padding:0;
+	height:100%;
+}
+html{
+	height:100%;
+}
+
+video, object {
+	top:0;left:0;
+	position:absolute;
+}
+
+h1, p {
+	background:white;
+	background-color:rgba(255, 255, 255, 0.8);
+	/* For IE 5.5 - 7*/
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF);
+	/* For IE 8*/
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF)";
+	position:relative;
+	padding:10px;
+}
+.guess_box h1{
+	text-align: left;
+	padding:0px;
+}
+video {
+  position: absolute;
+  /* Vertical and Horizontal center*/
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+}
