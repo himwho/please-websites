@@ -19,7 +19,6 @@
 		<title>Fucking Sarkis...</title>
 		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
 		<link rel="stylesheet" href="../lib/css/style.css" type="text/css" />
-		<link rel="stylesheet" href="../lib/css/jquery.maximage.css?v=1.2" type="text/css" media="screen" charset="utf-8" />
 	</head>
 	<body>
 		<div class="guess_box">
@@ -31,26 +30,11 @@
 		<div class="egg_box">
 			<a href="http://www.fuckingsarkis.com/goldenegg"><img src="http://www.fuckingsarkis.com/lib/images/egg.png" width="50" height="59" alt="goldenegg"></a>
 		</div>
-		<video autoplay="autoplay" loop="loop" autobuffer="autobuffer" poster="../lib/images/psarkiscrop.png" width="640" height="360">
-		 	<source src="../lib/video/fuckingsarkis.webm" type="video/webm" />
-		    <source src="../lib/video/fuckingsarkis.mp4" type="video/mp4" />
-		    <source src="../lib/video/fuckingsarkis.ogv" type="video/ogg" />
-			<img src="../lib/images/psarkiscrop.png" width="640" height="360" alt="fuckingsarkisposter"
+		<!-- The video -->
+		<video autoplay loop id="myVideo" poster="../lib/images/psarkiscrop.png">
+			<source src="../lib/video/fuckingsarkis.webm" type="video/webm">
+		    <source src="../lib/video/fuckingsarkis.mp4" type="video/mp4">
+		    <source src="../lib/video/fuckingsarkis.ogv" type="video/ogg">
 		</video>
-
-		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.js'></script>
-		<script type='text/javascript'>
-		//<![CDATA[
-			window.jQuery || document.write("<script src='../lib/js/jquery.min.js'>\x3C/script>")
-		//]]>
-		</script>
-		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
-		<script src="../lib/js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../lib/js/jquery.maximage.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" charset="utf-8">
-$(function(){
-	jQuery('video, object').maximage('maxcover');
-});
-		</script>
   	</body>
 </html>
