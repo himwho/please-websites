@@ -1,0 +1,23 @@
+{
+  "name": "dylanmarcus-express",
+  "version": "1.0.0",
+  "description": "Node + JS website from express + npx for Dylan j Marcus",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan Marcus",
+  "license": "ISC",
+  "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.4.0",
+    "express": "^4.17.1",
+    "liz": "^0.1.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "node-hot-loader": "^1.17.6",
+    "nodemon": "^2.0.1",
+    "webpack": "^4.41.2"
+  }
+}
