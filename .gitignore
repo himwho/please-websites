@@ -1,3 +1,7 @@
+#PleaseWebsite Custom Ignores
+creation-files/
+
+
 # ignore all files starting with . or ~
 .*
 ~*

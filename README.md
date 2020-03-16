@@ -1,5 +1,7 @@
 # Please Websites
 
+This is a git hosted directory, all files within the "creation-files/" folder of each website folder will be ignored from git to reduce clutter.
+
 ## TIER 1 WEBSITE LIST
 - meatgravy
   - update bg video framework
