@@ -1,5 +1,5 @@
 body{	
-	background:url('http://www.frenchfryangle.com/lib/images/fryangle.png')  no-repeat center center fixed;
+	background:url('/lib/images/fryangle.png')  no-repeat center center fixed;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;

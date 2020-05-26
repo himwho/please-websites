@@ -1,5 +1,5 @@
 body{	
-	background:url('http://www.parallelogrammy.com/lib/images/parallelogrammy3.png')  no-repeat center center fixed;
+	background:url('/lib/images/parallelogrammy3.png')  no-repeat center center fixed;
 	background-repeat: no-repeat;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
