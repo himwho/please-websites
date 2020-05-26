@@ -9,7 +9,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - design gravy boat logo (brendan)
 - fuckingsarkis
   - update bg video framework
- - genesname
+- genesname
   - update bg video framework
   - add analytics
 - philorpeter
@@ -44,6 +44,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - finish js
   - format
 - praisecod
+  - edit together content (brendan)
 
 ## Instructions for Hosting on AWS
  - create bucket with format: please-[website-domain]-public
