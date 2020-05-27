@@ -42,7 +42,7 @@ html {overflow-x:hidden;}
   cursor: pointer;
 }
 .start > input:hover {
-  color: #FFC0CB;
+  color: #A52A2A;
   transition:0.25s;
   -webkit-transition:0.25s;
 }
@@ -55,7 +55,7 @@ html {overflow-x:hidden;}
   -webkit-transition:0.25s;
   width: 100%; /* for good measure */
 }
-#fsVideo {
+#mgVideo {
   position: fixed;
   right: 0;
   bottom: 0;

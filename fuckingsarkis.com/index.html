@@ -21,20 +21,44 @@
 		<link rel="stylesheet" href="/lib/css/style.css" type="text/css" />
 	</head>
 	<body>
-		<div class="guess_box">
-			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			<br>
-			<a href="https://www.pleasewebsite.com">Back to PleaseWebsite</a>
+		<div id="start" class="start">
+			<input class="fullscreen" type="button" value="FUCKING SARKIS..." id="button" />
 		</div>
-		<div class="egg_box">
-			<a href="/goldenegg"><img src="/lib/images/egg.png" width="50" height="59" alt="goldenegg"></a>
+		<div id="main-container" class="container">
+			<div class="guess_box">
+				<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<br>
+				<a href="https://www.pleasewebsite.com">Back to PleaseWebsite</a>
+			</div>
+			<div class="egg_box">
+				<a href="/goldenegg"><img src="/lib/images/egg.png" width="50" height="59" alt="goldenegg"></a>
+			</div>
+			<!-- The video -->
+			<video loop id="fsVideo" poster="/lib/images/psarkiscrop.png">
+				<source src="/lib/video/fuckingsarkis.webm" type="video/webm">
+			    <source src="/lib/video/fuckingsarkis.mp4" type="video/mp4">
+			    <source src="/lib/video/fuckingsarkis.ogv" type="video/ogg">
+			</video>
+
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+			<script type="text/javascript">
+			var video = document.getElementById("fsVideo");
+			var curtain = document.getElementById("button");
+			$(function() {
+			    $('#button').click(function() {
+			        $('#main-container').animate({opacity: 0}, 250, function() {
+					    $(this).animate({opacity: 1}, 250);
+					});
+					$('#start').animate({opacity: 1}, 250, function() {
+					    $(this).animate({opacity: 0}, 250);
+					});
+			        $("#start").css("z-index", '0');
+			        video.play();
+			    });
+			});
+			</script>
 		</div>
-		<!-- The video -->
-		<video autoplay loop id="myVideo" poster="/lib/images/psarkiscrop.png">
-			<source src="/lib/video/fuckingsarkis.webm" type="video/webm">
-		    <source src="/lib/video/fuckingsarkis.mp4" type="video/mp4">
-		    <source src="/lib/video/fuckingsarkis.ogv" type="video/ogg">
-		</video>
   	</body>
 </html>

@@ -10,76 +10,55 @@
 		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
 		<title>MEATGRAVY.COM  |  Where gravy and meat collide</title>
 		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
-		<link rel="stylesheet" href="/lib/css/jquery.maximage.css?v=1.2" type="text/css" media="screen" charset="utf-8" />
-		
-		<style type="text/css" media="screen">
-			html {overflow-x:hidden;}
-			.guess_box{
-				width:150px;
-				position:absolute;
-				top:10px;
-				left:10px;
-				background:yellow;
-				opacity:.4;
-				margin:10px;
-				z-index:100;
-			body 
-			{background-color:yellow;font-family:arial;margin:0;padding:0;}
-			
-			video, object {
-				top:0;left:0;
-				position:absolute;
-			}
-			
-			h1, p {
-				background:white;
-				background-color:rgba(255, 255, 255, 0.8);
-				/* For IE 5.5 - 7*/
-				filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF);
-				/* For IE 8*/
-				-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99FFFFFF, endColorstr=#99FFFFFF)";
-				position:relative;
-				padding:10px;
-			}
-			.guess_box h1{
-				text-align: left;
-				padding:0px;
-			}
-		</style>
+		<link rel="stylesheet" href="/lib/css/style.css" type="text/css" />
 	</head>
 	<body>
-		<div class="guess_box">
-			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
-			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-			<br>
-			<a href="https://www.pleasewebsite.com">Back to PleaseWebsite</a>
+		<div id="start" class="start">
+			<input class="fullscreen" type="button" value="GRAAAAVVVVYYYYY" id="button" />
 		</div>
+		<div id="main-container" class="container">
+			<div class="guess_box">
+				<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+				<br>
+				<a href="https://www.pleasewebsite.com">Back to PleaseWebsite</a>
+			</div>
 
-		<video autoplay="autoplay" loop="loop" autobuffer="autobuffer" poster="/lib/images/meatgravyposter.jpg" width="640" height="360">
-		 	<source src="/lib/video/meatgravy.webm" type="video/webm" />
-		    <source src="/lib/video/meatgravy.mp4" type="video/mp4" />
-		    <source src="/lib/video/meatgravy2.ogv" type="video/ogg" />
-			<img src="/lib/images/meatgravyposter.jpg" width="640" height="360" alt="meatgravyposter">
-		</video>
-		
-		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
-		<script src="/lib/js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
-		<script src="/lib/js/jquery.maximage.js" type="text/javascript" charset="utf-8"></script>
-		
-		<script type="text/javascript" charset="utf-8">
-			$(function(){
-				jQuery('video, object').maximage('maxcover');
+			<!-- The video -->
+			<video loop id="mgVideo" poster="/lib/images/meatgravyposter.jpg">
+				<source src="/lib/video/meatgravy.webm" type="video/webm">
+			    <source src="/lib/video/meatgravy.mp4" type="video/mp4">
+			    <source src="/lib/video/meatgravy2.ogv" type="video/ogg">
+				<img src="/lib/images/meatgravyposter.jpg" width="640" height="360" alt="meatgravyposter">
+			</video>
+
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+			<script type="text/javascript">
+			var video = document.getElementById("mgVideo");
+			var curtain = document.getElementById("button");
+			$(function() {
+			    $('#button').click(function() {
+			        $('#main-container').animate({opacity: 0}, 250, function() {
+					    $(this).animate({opacity: 1}, 250);
+					});
+					$('#start').animate({opacity: 1}, 250, function() {
+					    $(this).animate({opacity: 0}, 250);
+					});
+			        $("#start").css("z-index", '0');
+			        video.play();
+			    });
 			});
-		</script>
-		
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			</script>
+			<script>
+			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-		  ga('create', 'UA-46442081-1', 'meatgravy.com');
-		  ga('send', 'pageview');
-		</script>
-  </body>
+			  ga('create', 'UA-46442081-1', 'meatgravy.com');
+			  ga('send', 'pageview');
+			</script>
+		</div>
+  	</body>
 </html>
