@@ -6,13 +6,10 @@ This is a git hosted directory, all files within the "creation-files/" folder of
 - General
   - Make a favicon for all websites
 - meatgravy
-  - update bg video framework
   - add analytics
   - design gravy boat logo (brendan)
 - fuckingsarkis
-  - update bg video framework
 - genesname
-  - update bg video framework
   - add analytics
 - philorpeter
   - format for desktop
@@ -53,7 +50,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
  - turn off all `Permissions>Block Public Access`
  - add new `Permissions>Bucket Policy`
  ```
- {
+{
     "Version": "2012-10-17",
     "Statement": [
         {
