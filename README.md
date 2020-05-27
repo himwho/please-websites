@@ -11,6 +11,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
 - fuckingsarkis
 - genesname
   - add analytics
+  - migrate to aws
 - philorpeter
   - format for desktop
   - add analytics
@@ -44,6 +45,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - format
 - praisecod
   - edit together content (brendan)
+  - migrate to aws, route both domains via certificate
 
 ## Instructions for Hosting on AWS
  - create bucket with format: please-[website-domain]-public
