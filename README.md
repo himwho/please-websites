@@ -11,7 +11,6 @@ This is a git hosted directory, all files within the "creation-files/" folder of
 - fuckingsarkis
 - genesname
   - add analytics
-  - migrate to aws
 - philorpeter
   - format for desktop
   - add analytics
@@ -20,16 +19,15 @@ This is a git hosted directory, all files within the "creation-files/" folder of
 - parallelogrammy
 - texmexagons
   - add analytics
-  - format bg image nicely
 - mexagons
   - add analytics
-  - format bg image nicely
 - auntcolony
   - add analytics
   - finish js
   - format
 - heatedmammories
   - edit together content (brendan)
+  - fix the certificates
 - chaffedorgangster
   - edit together content (brendan)
 - toomuchspaghetti
@@ -38,10 +36,8 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - edit together content (brendan)
 - teenagemutantninjahurdles
   - add analytics
-  - format bg image nicely
 - menacingminstrel
   - add analytics
-  - finish js
   - format
 - praisecod
   - edit together content (brendan)
