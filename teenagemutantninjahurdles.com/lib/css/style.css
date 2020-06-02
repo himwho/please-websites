@@ -1,0 +1,64 @@
+img.bg
+{
+    position: fixed;
+    max-width: 80%;
+    top: 10%;
+    left: 10%;
+}
+
+img.bg:empty
+{
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+@media screen and (orientation: portrait) {
+  img.bg {
+      max-width: 90%;
+  }
+}
+
+@media screen and (orientation: landscape) {
+  img.bg {
+      max-height: 90%;
+  }
+}
+
+/* Style the video: 100% width and height to cover the entire window */
+.fullscreen {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100vw;
+  height: 100vh;
+}
+#main-container {
+  opacity: 0;
+  transition:0.25s;
+  -webkit-transition:0.25s;
+  width: 100%; /* for good measure */
+}
+.twitter_box {
+	width:150px;
+	position:absolute;
+	top:10px;
+	left:10px;
+	background:white;
+	opacity:.8;
+	margin:10px;
+	z-index:100;
+}
+#back-to-top {
+	bottom:20px;
+	position:fixed;
+	right:20px;
+}
+body{
+	background-color:white;
+	font-family:"Helvetica; Neue",helvetica,arial,sans-serif;
+}
