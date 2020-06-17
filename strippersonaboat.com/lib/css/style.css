@@ -1,14 +1,6 @@
 body{	
-	background:url('/lib/images/fryangle.png')  no-repeat center center fixed;
-	background-repeat: no-repeat;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: 75% 75%;
-	position:absolute;
-	margin:0;
-	padding:40%;
 	font-family:"Helvetica; Neue",helvetica,arial,sans-serif;
+	background-color: #72bcff;
 }
 
 html {
@@ -25,6 +17,30 @@ header{
 	top:0;
 	width:100%;
 	z-index:99;
+}
+img{
+	max-width: 60%;
+	height:auto;
+	margin-left:auto;
+	margin-right:auto;
+	display:block;
+}
+.center{
+	margin: auto;
+  	width: 50%;
+  	padding: 10px;
+}
+.top-tag{
+	width:75vw;
+	font-size:3em;
+	top:10px;
+	text-align: center;
+}
+.bottom-tag{
+	width:75vw;
+	font-size:3em;
+	bottom:10px;
+	text-align: center;
 }
 
 .guess_box{
