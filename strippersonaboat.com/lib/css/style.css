@@ -19,11 +19,16 @@ header{
 	z-index:99;
 }
 img{
-	max-width: 60%;
-	height:auto;
+	max-height: 85vh;
+	width:auto;
 	margin-left:auto;
 	margin-right:auto;
 	display:block;
+}
+@media (max-width: 640px) {
+  	img {
+    	max-height: 60vh;
+	}
 }
 .center{
 	margin: auto;
@@ -42,18 +47,19 @@ img{
 	bottom:10px;
 	text-align: center;
 }
-
-.guess_box{
-	width:150px;
-	position:absolute;
-	top:10px;
-	left:10px;
-	background:white;
-	opacity:.8;
-	margin:10px;
-	z-index:100;
+.flash {
+   animation-name: flash;
+    animation-duration: 0.2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
 }
-			
+
+@keyframes flash {
+    from {color: white;}
+    to {color: black;}
+}	
 .container {clear:both;margin:0 auto;width:980px;}
 .container:after {content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 
