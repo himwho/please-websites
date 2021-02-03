@@ -1,6 +1,33 @@
 body {
   background: rgba(255,255,255,1);
 }
+#store-overlay {
+  position: fixed;
+  background-color:rgba(255, 255, 255, 0.5)
+  min-width: 300px;
+  top: -100%; 
+  left: 0;
+  padding-top:20vh;
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  transition: all .25s;
+  z-index:1000;
+}
+.close-btn {
+  position:absolute;
+  top:10vh !important;
+  left:80vw !important;
+}
+.active {
+  top: 0 !important; 
+  transition: all .25s;
+}
 .papers {
   font-size:.8vmin;
   hyphens: auto;
@@ -14,7 +41,7 @@ body {
   align-content: center;
   justify-content: center;
 }
-.paper {
+.paper{
   transition: all .25s;
   display: inline-block;
   font-family: sans-serif;
@@ -26,9 +53,26 @@ body {
   /*padding:1.75em 1.5em 0 2em;*/
   position: relative;
   /*transform: rotate(-3deg);*/
-  z-index:1;
+  z-index:10;
+}
+.paper-static{
+  transition: all .25s;
+  display: inline-block;
+  font-family: sans-serif;
+  flex-grow:1;
+  max-width:150px;
+  min-width:150px;
+  height:auto;
+  margin: 3em;
+  /*padding:1.75em 1.5em 0 2em;*/
+  position: relative;
+  /*transform: rotate(-3deg);*/
+  z-index:10;
 }
 .paper img{
+  box-shadow: 0 .25em .25em rgba(0,0,0,.25);
+}
+.paper-static img{
   box-shadow: 0 .25em .25em rgba(0,0,0,.25);
 }
 .paper:nth-of-type(even) {
@@ -111,10 +155,13 @@ body {
   text-transform: uppercase;
 }
 .paper:hover {
-  z-index: 9;
+  z-index: 11;
   cursor:pointer;
   box-shadow: 0em 5em 5em rgba(0,0,0,.5);
   transform: rotate(1deg) scale(1.1);
 }
 .paper:hover::after {
+}
+.paper .nozoom{
+
 }
