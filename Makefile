@@ -33,6 +33,8 @@ endif
 install: 
 	# install all deps
 
+all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle chaffedorgangster praisecod
+
 auntcolony:
 	aws s3 sync auntcolony.com/  s3://$(AUNTCOLONY) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
