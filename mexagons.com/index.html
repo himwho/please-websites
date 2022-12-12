@@ -24,7 +24,22 @@
 			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			<br>
-			<a href="https://pleasewebsite.com">Back to PleaseWebsite</a>
+			<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
 		</div>
-  </body>
+		<script type='text/javascript'>
+			function inIframe() {
+				try {
+					return window.self !== window.top;
+				} catch (e) {
+					return true;
+				}
+			}
+			$(document).ready(function(){
+				if (inIframe()) {
+					var	item = document.getElementById("goBackHome");
+					item.style.display = 'none';	
+				}
+			})
+		</script>
+	</body>
 </html>
