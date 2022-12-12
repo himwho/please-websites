@@ -1,28 +1,56 @@
 body {
   background: rgba(255,255,255,1);
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
-#store-overlay {
-  position: fixed;
-  background-color:rgba(255, 255, 255, 0.75);
-  min-width: 300px;
-  top: -150%; 
-  left: 0;
-  padding-top:20vh;
+.productOuter {
+}
+.productCard {
+}
+.productCard img {
   width: 100%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  flex-wrap: wrap;
-  align-items: center;
-  align-content: center;
-  justify-content: center;
-  transition: all .25s;
-  z-index:1000;
 }
-.close-btn {
-  position:absolute;
-  top:10vh !important;
-  left:80vw !important;
+.productCard h2 {
+}
+.modal-outer {
+  display: grid;
+  background: hsla(50, 100%, 50%, 0.7);
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  /* hide this modal until we need it */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.modal-outer.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal-outer img {
+  width: 100%;
+}
+.modal-inner {
+  max-width: 80vw;
+  min-width: 60vw;
+  max-height: 85vh;
+  min-height: 60vh;
+  padding: 2rem;
+  border-radius: 5px;
+  background: white;
+  transform: translateY(-200%);
+  transition: transform .5s;
+}
+.modal-inner iframe {
+  width: 100%;
+  height: 90%;
+}
+.modal-outer.open .modal-inner {
+  transform: translateY(0);
 }
 .active {
   top: 0 !important; 
@@ -35,8 +63,6 @@ body {
   font-family: bureau-grot-condensed, sans-serif;
   font-weight: 300;
   font-style: normal;
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -47,13 +73,11 @@ body {
   font-family: sans-serif;
   flex-grow:1;
   max-width:150px;
-  min-width:150px;
   height:auto;
   margin: 3em;
   /*padding:1.75em 1.5em 0 2em;*/
   position: relative;
   /*transform: rotate(-3deg);*/
-  z-index:10;
 }
 .paper-static{
   transition: all .25s;
@@ -67,10 +91,11 @@ body {
   /*padding:1.75em 1.5em 0 2em;*/
   position: relative;
   /*transform: rotate(-3deg);*/
-  z-index:10;
 }
 .paper img{
   box-shadow: 0 .15em .15em rgba(0,0,0,.25);
+  min-width: 150px;
+  min-height: 150px;
 }
 .paper-static img{
   box-shadow: 0 .15em .15em rgba(0,0,0,.25);
@@ -155,10 +180,10 @@ body {
   text-transform: uppercase;
 }
 .paper:hover {
-  z-index: 11;
   cursor:pointer;
   box-shadow: 0em .5em .5em rgba(0,0,0,.5);
   transform: rotate(1deg) scale(1.05);
+  z-index: 2;
 }
 .paper:hover::after {
 }

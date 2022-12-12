@@ -1,0 +1,155 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>PLEASE</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="css/styles.css">
+        <script src="js/modernizr-2.8.3.min.js"></script>
+    </head>
+    <body>
+
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://meatgravy.club">
+                <img src="img/meatgravy.png">
+                </button>
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://frenchfryangle.com">
+                <img src="img/frenchfryangle.png">
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://genesname.com">
+                <img src="img/genesname.png">
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://parallelograndma.com">
+                <img src="img/parallelograndma.png">
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://philorpeter.com">
+                <img src="img/philorpeter.png">
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://parallelogrammy.com">
+                <img src="img/parallelogrammy.png">
+            </div>
+        </section>
+        <section class="papers productOuter">
+            <div class="paper productCard" data-description="https://menacingminstrel.com">
+                <img src="img/menacingminstrel.png">
+            </div>
+        </section>
+
+
+        <div class="modal-outer">
+            <div id="store-overlay" class="modal-inner">
+<!--                 <section class="papers">
+                    <div class="paper-static">
+                        <img src="img/MeatGravy.png">
+                    </div>
+                </section>
+                <section class="papers store-overlay-items-row" style="margin-top:-75px;">
+                    <div class="paper nozoom" style="margin-left:15px;">
+                        <img src="img/Tee1.png">
+                    </div>
+                    <div class="paper nozoom" style="margin-left:-15px;">
+                        <img src="img/Sweater1.png">
+                    </div>
+                </section>
+                <section class="papers store-overlay-buttons-row">
+                    <div class="paper nozoom" style="margin-top:-50px;margin-left:15px;">
+                        <img src="img/buy1.png" width="imgwidth" height="imgheight" usemap="#seamlessbutton">
+                        <map name="seamlessbutton">
+                            <area shape="rect" coords="1px,1px,2px,2px" href="link" alt="Seamless Link">
+                        </map>
+                    </div>
+                    <div class="paper nozoom" style="margin-top:-50px;margin-left:-15px;">
+                        <img src="img/buy2.png">
+                    </div>
+                </section> -->
+            </div>
+        </div>
+
+        <script>
+            const productCardButtons = document.querySelectorAll('.productCard');
+            const modalOuter = document.querySelector('.modal-outer');
+            const modalInner = document.querySelector('.modal-inner');
+            productCardButtons.forEach(button => button.addEventListener('click', handleproductCardButtonClick))
+
+            function handleproductCardButtonClick(event) {
+                const button = event.currentTarget;
+                const productCard = button.closest('.productCard');
+
+                // Grab the image src
+                const imgSrc = productCard.querySelector('img').src;
+                const siteURL = productCard.dataset.description;
+                console.log(siteURL);
+                //const name = productCard.querySelector('h2').textContent;
+
+                // populate the modal with the new info
+                modalInner.innerHTML = `
+                <iframe src="${siteURL}" title="${siteURL}"></iframe> 
+                <p>${siteURL}</p>
+                `;
+
+                // show the modal
+                modalOuter.classList.add('open');
+            }
+            
+            function closeModal() {
+                modalInner.innerHTML = `
+                `;
+                modalOuter.classList.remove('open');
+            }
+
+            modalOuter.addEventListener('click', function(event) {
+                const isOutside = !event.target.closest('.modal-inner');
+                if (isOutside) {
+                    closeModal();
+                }
+            })
+
+            window.addEventListener('keydown', event => {
+              //console.log(event);
+              if (event.key === 'Escape') {
+                closeModal();
+              }
+            });
+
+            // collect all the divs
+            //var divs = document.getElementsByTagName('div');
+            // get window width and height
+            var winWidth = window.innerWidth/2;
+            var winHeight = window.innerHeight/2;
+            console.log(winWidth);
+            console.log(winHeight);
+            for ( var i=0; i < productCardButtons.length; i++ ) {
+                var thisDiv = productCardButtons[i];
+                // get random numbers for each element
+                randomTop = getRandomNumber(0, winHeight-150);
+                randomLeft = getRandomNumber(0, winWidth-150);
+                // update top and left position
+                thisDiv.style.top = randomTop +"px";
+                thisDiv.style.left = randomLeft +"px";
+                console.log(randomTop, randomLeft);
+            }
+
+            // function that returns a random number between a min and max
+            function getRandomNumber(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+        </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
+        <script src="js/script.js"></script>
+    </body>
+</html>
