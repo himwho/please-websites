@@ -8,7 +8,7 @@ IOS8POEMS = please-ios8poems.com-public
 PLEASEWEBSITE = please-pleasewebsite.com-public
 JACKNPHILFOODREVIEWS = please-jacknphilfood.reviews
 STRIPPERFARTS = please-stripperfarts.com-public
-MEATGRAVY = please-meatgravy.com-public
+MEATGRAVY = please-meatgravy.club-public
 TMNH = please-teenagemutantninjahurdles.com-public
 MENACINGMINSTREL = please-menacingminstrel.com-public
 TEXMEGAONS = please-texmexagons.com-public
@@ -63,7 +63,7 @@ stripperfarts:
 	aws s3 sync stripperfarts.com/  s3://$(STRIPPERFARTS) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 meatgravy:
-	aws s3 sync meatgravy.com/ s3://$(MEATGRAVY) --cache-control no-cache --exclude '.DS_Store' --profile personal
+	aws s3 sync meatgravy.club/ s3://$(MEATGRAVY) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 teenagemutantninjahurdles:
 	aws s3 sync teenagemutantninjahurdles.com/  s3://$(TMNH) --cache-control no-cache --exclude '.DS_Store' --profile personal
