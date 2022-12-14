@@ -11,6 +11,18 @@
         <script src="js/modernizr-2.8.3.min.js"></script>
     </head>
     <body>
+        <div class="image-fader" style="">
+<!--             <img src="img/please-logo/1.png" class="center-logo"/>
+            <img src="img/please-logo/2.png" class="center-logo"/>
+            <img src="img/please-logo/3.png" class="center-logo"/>
+            <img src="img/please-logo/4.png" class="center-logo"/> -->
+            <img src="img/please-logo/5.png" class="center-logo" style="padding-top:10px"/>
+            <img src="img/please-logo/6.png" class="center-logo" style="padding-top:10px"/>
+            <img src="img/please-logo/7.png" class="center-logo" style="padding-top:10px"/>
+            <img src="img/please-logo/8.png" class="center-logo" style="padding-top:10px"/>
+<!--             <img src="img/please-logo/9.png" class="center-logo"/>
+            <img src="img/please-logo/10.png" class="center-logo"/> -->
+        </div>
 
         <div class="paper productCard" data-name="meatgravy" data-website="meatgravy.club" data-website-url="https://meatgravy.club">
             <img src="img/meatgravy.png">
@@ -119,6 +131,7 @@
 
             var winWidth = window.innerWidth;
             var winHeight = window.innerHeight;
+            console.log(window.innerWidth/2, window.innerHeight/2);
 
             // function that returns a random number between a min and max
             function getRandomNumber(min, max) {
@@ -127,17 +140,44 @@
             function randomizePostIts() {
                 for ( var i=0; i < productCardButtons.length; i++ ) {
                     var thisDiv = productCardButtons[i];
-                    randomTop = getRandomNumber(0, winHeight-200);
-                    randomLeft = getRandomNumber(0, winWidth-200);
-                    // TODO: add or subtract 75 if too close to previous random point
-                    // TODO: PLEASE logo in center, do not allow a random point too close to logo
+                    randomTop = getRandomNumber(0, winHeight-150);
+                    randomLeft = getRandomNumber(0, winWidth-150);
+                    //console.log(randomTop, randomLeft);
+                    //console.log("original values ^");
+                    
+                    // Center thresholds for blocking random points
+                    var hCenterMin = winHeight/2-(winHeight*0.1);
+                    var hCenterMax = winHeight/2+(winHeight*0.1);
+                    var wCenterMin = winWidth/2-(winWidth*0.2);
+                    var wCenterMax = winWidth/2+(winWidth*0.2);
+                    if ((randomTop < hCenterMax) && (randomTop > hCenterMin)){
+                        // we are in the inside the center and should add/substract to the point
+                        if (randomTop > winHeight/2) {
+                            randomTop = randomTop - (hCenterMax-hCenterMin);
+                        } else if (randomTop < winHeight/2) {
+                            randomTop = randomTop + (hCenterMax-hCenterMin);
+                        } else {
+
+                        }
+                    }
+                    if ((randomLeft < wCenterMax) && (randomLeft > wCenterMin)){
+                        // we are in the inside the center and should add/substract to the point
+                        if (randomLeft > winWidth/2) {
+                            randomLeft = randomLeft - (wCenterMax-wCenterMin);
+                        } else if (randomLeft < winWidth/2) {
+                            randomLeft = randomLeft + (wCenterMax-wCenterMin);
+                        } else {
+
+                        }
+                    }
+                    //console.log(randomTop, randomLeft);
+                    //console.log("shifted values ^");
                     thisDiv.style.top = randomTop +"px";
                     thisDiv.style.left = randomLeft +"px";
-                    //console.log(randomTop, randomLeft);
                 }
             }
 
-             window.addEventListener("load", function() {
+            window.addEventListener("load", function() {
                 window.dispatchEvent(new Event('resize'));
                 randomizePostIts();
             });
