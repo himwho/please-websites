@@ -34,22 +34,25 @@
             <img src="img/genesname.png">
         </div>
         <div class="paper productCard" data-name="parallelograndma" data-website="parallelograndma.com" data-website-url="https://parallelograndma.com">
-            <img src="img/parallelograndma.png">
+            <img src="img/postit.png">
         </div>
         <div class="paper productCard" data-name="philorpeter" data-website="philorpeter.com" data-website-url="https://philorpeter.com">
-            <img src="img/philorpeter.png">
+            <img src="img/postit.png">
         </div>
         <div class="paper productCard" data-name="parallelogrammy" data-website="parallelogrammy.com" data-website-url="https://parallelogrammy.com">
-            <img src="img/parallelogrammy.png">
+            <img src="img/postit.png">
         </div>
         <div class="paper productCard" data-name="menacingminstrel" data-website="menacingminstrel.com" data-website-url="https://menacingminstrel.com">
-            <img src="img/menacingminstrel.png">
+            <img src="img/postit.png">
         </div>
         <div class="paper productCard" data-name="mexagons" data-website="mexagons.com" data-website-url="https://mexagons.com">
-            <img src="img/mexagons.png">
+            <img src="img/postit.png">
         </div>
         <div class="paper productCard" data-name="texmexagons" data-website="texmexagons.com" data-website-url="https://texmexagons.com">
-            <img src="img/texmexagons.png">
+            <img src="img/postit.png">
+        </div>
+        <div class="paper productCard" data-name="tomsachsophone" data-website="tomsachsophone.com" data-website-url="https://tomsachsophone.com">
+            <img src="img/postit.png">
         </div>
 
         <div class="modal-outer">
@@ -129,9 +132,10 @@
               }
             });
 
+            var postItArray = []; // storing array
             var winWidth = window.innerWidth;
             var winHeight = window.innerHeight;
-            console.log(window.innerWidth/2, window.innerHeight/2);
+            postItArray.push([winWidth, winHeight]); // push back center point
 
             // function that returns a random number between a min and max
             function getRandomNumber(min, max) {
@@ -140,26 +144,15 @@
             function randomizePostIts() {
                 for ( var i=0; i < productCardButtons.length; i++ ) {
                     var thisDiv = productCardButtons[i];
-                    randomTop = getRandomNumber(0, winHeight-150);
                     randomLeft = getRandomNumber(0, winWidth-150);
-                    //console.log(randomTop, randomLeft);
-                    //console.log("original values ^");
+                    randomTop = getRandomNumber(0, winHeight-150);
+                    //console.log("Original Values: ", randomLeft, randomTop);
                     
                     // Center thresholds for blocking random points
-                    var hCenterMin = winHeight/2-(winHeight*0.1);
-                    var hCenterMax = winHeight/2+(winHeight*0.1);
                     var wCenterMin = winWidth/2-(winWidth*0.2);
                     var wCenterMax = winWidth/2+(winWidth*0.2);
-                    if ((randomTop < hCenterMax) && (randomTop > hCenterMin)){
-                        // we are in the inside the center and should add/substract to the point
-                        if (randomTop > winHeight/2) {
-                            randomTop = randomTop - (hCenterMax-hCenterMin);
-                        } else if (randomTop < winHeight/2) {
-                            randomTop = randomTop + (hCenterMax-hCenterMin);
-                        } else {
-
-                        }
-                    }
+                    var hCenterMin = winHeight/2-(winHeight*0.1);
+                    var hCenterMax = winHeight/2+(winHeight*0.1);
                     if ((randomLeft < wCenterMax) && (randomLeft > wCenterMin)){
                         // we are in the inside the center and should add/substract to the point
                         if (randomLeft > winWidth/2) {
@@ -167,13 +160,56 @@
                         } else if (randomLeft < winWidth/2) {
                             randomLeft = randomLeft + (wCenterMax-wCenterMin);
                         } else {
-
+                            if (randomLeft < winWidth/2){
+                                randomLeft = randomLeft + (hCenterMax-hCenterMin);
+                            }
+                            if (randomLeft > winWidth/2){
+                                randomLeft = randomLeft - (hCenterMax-hCenterMin);
+                            }
                         }
                     }
-                    //console.log(randomTop, randomLeft);
-                    //console.log("shifted values ^");
-                    thisDiv.style.top = randomTop +"px";
+                    if ((randomTop < hCenterMax) && (randomTop > hCenterMin)){
+                        // we are in the inside the center and should add/substract to the point
+                        if (randomTop > winHeight/2) {
+                            randomTop = randomTop - (hCenterMax-hCenterMin);
+                        } else if (randomTop < winHeight/2) {
+                            randomTop = randomTop + (hCenterMax-hCenterMin);
+                        } else {
+                            if (randomTop < winHeight/2){
+                                randomTop = randomTop + (hCenterMax-hCenterMin);
+                            }
+                            if (randomTop > winHeight/2){
+                                randomTop = randomTop - (hCenterMax-hCenterMin);
+                            }
+                        }
+                    }
+
+                    // Check if too close to another postit
+                    var postItOffset = 75;
+                    for (var i = 0; i < postItArray.length; i++) {
+                        if (Math.abs(postItArray[i][0] - randomLeft) < postItOffset) {
+                            if (randomLeft < postItOffset) {
+                                randomLeft = randomLeft + postItOffset;
+                            } else if (randomLeft > winWidth-postItOffset) {
+                                randomLeft = randomLeft - postItOffset;
+                            }   
+                        }
+                        if (Math.abs(postItArray[i][1] - randomTop) < postItOffset) {
+                            if (randomTop < postItOffset) {
+                                randomTop = randomTop + postItOffset;
+                            } else if (randomTop > winHeight-postItOffset) {
+                                randomTop = randomTop - postItOffset;
+                            }
+                        }
+                    }
+
+                    // Store postit value
+                    //console.log("Shifted Values: ", randomLeft, randomTop);
+                    postItArray.push([randomLeft, randomTop]);
+
+                    // Update postit position on screen
                     thisDiv.style.left = randomLeft +"px";
+                    thisDiv.style.top = randomTop +"px";
                 }
             }
 
