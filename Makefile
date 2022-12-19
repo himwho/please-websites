@@ -1,4 +1,5 @@
 #  = please Deployment Management
+PLEASE = please-please.nyc-public
 AUNTCOLONY = please-auntcolony.com-public
 FUCKINGSARKIS = please-fuckingsarkis.com-public
 PARALLELOGRANDMA = please-parallelograndma.com-public
@@ -34,6 +35,9 @@ install:
 	# install all deps
 
 all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle chaffedorgangster praisecod
+
+please:
+	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 auntcolony:
 	aws s3 sync auntcolony.com/  s3://$(AUNTCOLONY) --cache-control no-cache --exclude '.DS_Store' --profile personal

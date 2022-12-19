@@ -109,7 +109,7 @@ function generatePhilorPeter(questions, songContainer, resultsContainer, submitB
                 answers.push(
                     '<label class="rad">'
                         + '<input type="radio" name="question'+i+'" value="'+letter+'">'
-                        + '<img src="lib/res/img/'+letter+i+'.png" height="58" width="42">'
+                        + '<img src="res/img/'+letter+i+'.png" height="58" width="42">'
                         + letter + ': '
                         + questions[i].answers[letter]
                     + '</label>'
@@ -120,10 +120,9 @@ function generatePhilorPeter(questions, songContainer, resultsContainer, submitB
             output.push(
                 '<div class="question">' 
                 + questions[i].question 
-                + '<div>'
+                + '<br>'
                 + '<audio controls>'
-                + '<source src="lib/res/aud/'+i+'.mp3" type="audio/mpeg">'
-                + '</div>'
+                + '<source src="res/aud/'+i+'.mp3" type="audio/mpeg">'
                 + '</div>'
                 + '<div class="answers">' + answers.join('') + '</div>'
             );

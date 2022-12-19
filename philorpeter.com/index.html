@@ -1,40 +1,41 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Phil Collins or Peter Gabriel?</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Phil Collins or Peter Gabriel?</title>
+	<link rel="stylesheet" href="css/styles.css">
+	<script type="text/javascript" src="https://livejs.com/live.js"></script>
 </head>
 
 <body>
+	<div class="guestbox" id="guestbox" onload="checkIfIframe();">
+		<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+		<br>
+		<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
+	</div>
 
-<div class="guestbox" id="guestbox">
-	<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
-	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-	<br>
-	<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
-</div>
+	<div id="quiz" class="main"></div>
+	<div class="bottom-bar">
+		<button id="submit">Get Results</button>
+		<div id="results"></div>
+	</div>
 
-<div id="quiz" class="main"></div>
-<button id="submit">Get Results</button>
-<div></div>
-<div id="results"></div>
-
-<script type="text/javascript" src="/lib/js/quiz.js"></script>
-<script type='text/javascript'>
-	function inIframe() {
-		try {
-			return window.self !== window.top;
-		} catch (e) {
-			return true;
+	<script type="text/javascript" src="/js/quiz.js"></script>
+	<script type='text/javascript'>
+		function inIframe() {
+			try {
+				return window.self !== window.top;
+			} catch (e) {
+				return true;
+			}
 		}
-	}
-	$(document).ready(function(){
-		if (inIframe()) {
-			var	item = document.getElementById("goBackHome");
-			item.style.display = 'none';	
+		function checkIfIframe(){
+			if (inIframe()) {
+				var	item = document.getElementById("goBackHome");
+				item.style.display = 'none';	
+			}
 		}
-	})
 </script>
-
 </body>
 </html>
