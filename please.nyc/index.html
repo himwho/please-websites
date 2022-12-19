@@ -132,84 +132,97 @@
               }
             });
 
-            var postItArray = []; // storing array
             var winWidth = window.innerWidth;
             var winHeight = window.innerHeight;
-            postItArray.push([winWidth, winHeight]); // push back center point
+            var centerPoint = { x: winWidth/2, y: winHeight/2 };
 
             // function that returns a random number between a min and max
             function getRandomNumber(min, max) {
                 return Math.random() * (max - min) + min;
             }
+
+            function distance(point1, point2) {
+                let y = point2.x - point1.x;
+                let x = point2.y - point1.y;
+                return Math.sqrt(x * x + y * y);
+            }
+
             function randomizePostIts() {
+                var postItArray = []; // storing array
+                postItArray.push(centerPoint); // push back center point
+
                 for ( var i=0; i < productCardButtons.length; i++ ) {
                     var thisDiv = productCardButtons[i];
-                    randomLeft = getRandomNumber(0, winWidth-150);
-                    randomTop = getRandomNumber(0, winHeight-150);
-                    //console.log("Original Values: ", randomLeft, randomTop);
-                    
+
+                    var postItOffsetDistance = 200;
+                    var newPoint;
+                    var foundConflict = true;
+
+                    while (foundConflict) {
+                        // make an array of points too close to new postit
+                        newPoint = { x: getRandomNumber(0, winWidth-postItOffsetDistance), y: getRandomNumber(0, winHeight-postItOffsetDistance) };
+
+                        var conflicts = 0;
+
+                        for ( var i=0; i < postItArray.length; i++) {
+                            console.log("Testing:", i, "Distance:", distance(newPoint, postItArray[i]), "Out of:", postItArray.length);
+                            if (distance(newPoint, postItArray[i]) < 150) {
+                                // too close!
+                                console.log("Conflict! Against:", i+": Distance:", distance(newPoint, postItArray[i]));
+                                conflicts++;
+                            }
+                        }
+                        if (conflicts == 0) {
+                            foundConflict = false;
+                            console.log("New Point: X="+newPoint.x+", Y="+newPoint.y);
+                        } else {
+                            console.log("Restarting with new point because of "+conflicts+" conflicts!")
+                        }
+                    }
+
                     // Center thresholds for blocking random points
                     var wCenterMin = winWidth/2-(winWidth*0.2);
                     var wCenterMax = winWidth/2+(winWidth*0.2);
                     var hCenterMin = winHeight/2-(winHeight*0.1);
                     var hCenterMax = winHeight/2+(winHeight*0.1);
-                    if ((randomLeft < wCenterMax) && (randomLeft > wCenterMin)){
+                    if ((newPoint.x < wCenterMax) && (newPoint.x > wCenterMin)){
                         // we are in the inside the center and should add/substract to the point
-                        if (randomLeft > winWidth/2) {
-                            randomLeft = randomLeft - (wCenterMax-wCenterMin);
-                        } else if (randomLeft < winWidth/2) {
-                            randomLeft = randomLeft + (wCenterMax-wCenterMin);
+                        if (newPoint.x > winWidth/2) {
+                            newPoint.x = newPoint.x - (wCenterMax-wCenterMin);
+                        } else if (newPoint.x < winWidth/2) {
+                            newPoint.x = newPoint.x + (wCenterMax-wCenterMin);
                         } else {
-                            if (randomLeft < winWidth/2){
-                                randomLeft = randomLeft + (hCenterMax-hCenterMin);
+                            if (newPoint.x < winWidth/2){
+                                newPoint.x = newPoint.x + (hCenterMax-hCenterMin);
                             }
-                            if (randomLeft > winWidth/2){
-                                randomLeft = randomLeft - (hCenterMax-hCenterMin);
+                            if (newPoint.x > winWidth/2){
+                                newPoint.x = newPoint.x - (hCenterMax-hCenterMin);
                             }
                         }
                     }
-                    if ((randomTop < hCenterMax) && (randomTop > hCenterMin)){
+                    if ((newPoint.y < hCenterMax) && (newPoint.y > hCenterMin)){
                         // we are in the inside the center and should add/substract to the point
-                        if (randomTop > winHeight/2) {
-                            randomTop = randomTop - (hCenterMax-hCenterMin);
-                        } else if (randomTop < winHeight/2) {
-                            randomTop = randomTop + (hCenterMax-hCenterMin);
+                        if (newPoint.y > winHeight/2) {
+                            newPoint.y = newPoint.y - (hCenterMax-hCenterMin);
+                        } else if (newPoint.y < winHeight/2) {
+                            newPoint.y = newPoint.y + (hCenterMax-hCenterMin);
                         } else {
-                            if (randomTop < winHeight/2){
-                                randomTop = randomTop + (hCenterMax-hCenterMin);
+                            if (newPoint.y < winHeight/2){
+                                newPoint.y = newPoint.y + (hCenterMax-hCenterMin);
                             }
-                            if (randomTop > winHeight/2){
-                                randomTop = randomTop - (hCenterMax-hCenterMin);
-                            }
-                        }
-                    }
-
-                    // Check if too close to another postit
-                    var postItOffset = 75;
-                    for (var i = 0; i < postItArray.length; i++) {
-                        if (Math.abs(postItArray[i][0] - randomLeft) < postItOffset) {
-                            if (randomLeft < postItOffset) {
-                                randomLeft = randomLeft + postItOffset;
-                            } else if (randomLeft > winWidth-postItOffset) {
-                                randomLeft = randomLeft - postItOffset;
-                            }   
-                        }
-                        if (Math.abs(postItArray[i][1] - randomTop) < postItOffset) {
-                            if (randomTop < postItOffset) {
-                                randomTop = randomTop + postItOffset;
-                            } else if (randomTop > winHeight-postItOffset) {
-                                randomTop = randomTop - postItOffset;
+                            if (newPoint.y > winHeight/2){
+                                newPoint.y = newPoint.y - (hCenterMax-hCenterMin);
                             }
                         }
                     }
 
                     // Store postit value
-                    //console.log("Shifted Values: ", randomLeft, randomTop);
-                    postItArray.push([randomLeft, randomTop]);
+                    //console.log("Shifted Values: ", newPoint.x, newPoint.y);
+                    postItArray.push(newPoint);
 
                     // Update postit position on screen
-                    thisDiv.style.left = randomLeft +"px";
-                    thisDiv.style.top = randomTop +"px";
+                    thisDiv.style.left = newPoint.x +"px";
+                    thisDiv.style.top = newPoint.y +"px";
                 }
             }
 
