@@ -123,7 +123,7 @@ body {
   font-family: sans-serif;
   flex-grow:1;
   width: 15vw;
-  max-width:200px;
+  max-width:150px;
   height:auto;
   position:absolute;
   /*padding:1.75em 1.5em 0 2em;*/

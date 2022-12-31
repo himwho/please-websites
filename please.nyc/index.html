@@ -134,7 +134,10 @@
 
             var winWidth = window.innerWidth;
             var winHeight = window.innerHeight;
-            var centerPoint = { x: winWidth/2, y: winHeight/2 };
+            var centerPointM = { x: winWidth/2, y: winHeight/2 };
+            // Center thresholds for blocking random points
+            var centerPointL = { x: winWidth/2-(175), y: winHeight/2 };
+            var centerPointR = { x:  winWidth/2+(175), y: winHeight/2 };
 
             // function that returns a random number between a min and max
             function getRandomNumber(min, max) {
@@ -149,12 +152,12 @@
 
             function randomizePostIts() {
                 var postItArray = []; // storing array
-                postItArray.push(centerPoint); // push back center point
+                postItArray.push(centerPointL, centerPointM, centerPointR); // push back center points
 
                 for ( var i=0; i < productCardButtons.length; i++ ) {
                     var thisDiv = productCardButtons[i];
 
-                    var postItOffsetDistance = 200;
+                    var postItOffsetDistance = 150;
                     var newPoint;
                     var foundConflict = true;
 
@@ -164,11 +167,12 @@
 
                         var conflicts = 0;
 
-                        for ( var i=0; i < postItArray.length; i++) {
-                            console.log("Testing:", i, "Distance:", distance(newPoint, postItArray[i]), "Out of:", postItArray.length);
-                            if (distance(newPoint, postItArray[i]) < 150) {
+                        for ( var j=0; j < postItArray.length; j++) {
+                            var currentDist = distance(newPoint, postItArray[j]);
+                            console.log("Testing:", j, "Distance:", currentDist, "Out of:", postItArray.length);
+                            if (currentDist < postItOffsetDistance) {
                                 // too close!
-                                console.log("Conflict! Against:", i+": Distance:", distance(newPoint, postItArray[i]));
+                                console.log("Conflict! Against:", j+": Distance:", currentDist);
                                 conflicts++;
                             }
                         }
@@ -177,42 +181,6 @@
                             console.log("New Point: X="+newPoint.x+", Y="+newPoint.y);
                         } else {
                             console.log("Restarting with new point because of "+conflicts+" conflicts!")
-                        }
-                    }
-
-                    // Center thresholds for blocking random points
-                    var wCenterMin = winWidth/2-(winWidth*0.2);
-                    var wCenterMax = winWidth/2+(winWidth*0.2);
-                    var hCenterMin = winHeight/2-(winHeight*0.1);
-                    var hCenterMax = winHeight/2+(winHeight*0.1);
-                    if ((newPoint.x < wCenterMax) && (newPoint.x > wCenterMin)){
-                        // we are in the inside the center and should add/substract to the point
-                        if (newPoint.x > winWidth/2) {
-                            newPoint.x = newPoint.x - (wCenterMax-wCenterMin);
-                        } else if (newPoint.x < winWidth/2) {
-                            newPoint.x = newPoint.x + (wCenterMax-wCenterMin);
-                        } else {
-                            if (newPoint.x < winWidth/2){
-                                newPoint.x = newPoint.x + (hCenterMax-hCenterMin);
-                            }
-                            if (newPoint.x > winWidth/2){
-                                newPoint.x = newPoint.x - (hCenterMax-hCenterMin);
-                            }
-                        }
-                    }
-                    if ((newPoint.y < hCenterMax) && (newPoint.y > hCenterMin)){
-                        // we are in the inside the center and should add/substract to the point
-                        if (newPoint.y > winHeight/2) {
-                            newPoint.y = newPoint.y - (hCenterMax-hCenterMin);
-                        } else if (newPoint.y < winHeight/2) {
-                            newPoint.y = newPoint.y + (hCenterMax-hCenterMin);
-                        } else {
-                            if (newPoint.y < winHeight/2){
-                                newPoint.y = newPoint.y + (hCenterMax-hCenterMin);
-                            }
-                            if (newPoint.y > winHeight/2){
-                                newPoint.y = newPoint.y - (hCenterMax-hCenterMin);
-                            }
                         }
                     }
 
@@ -227,14 +195,13 @@
             }
 
             window.addEventListener("load", function() {
-                window.dispatchEvent(new Event('resize'));
                 randomizePostIts();
             });
-             
-            var doit; // used for timer check
-            window.onresize = function() {
-                clearTimeout(doit);
-                doit = setTimeout(randomizePostIts, 100);
+            window.addEventListener("resize", onresize);
+            var onresize = function(e) {
+                //width = e.target.outerWidth;
+                //height = e.target.outerHeight;
+                randomizePostIts();
             }
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
