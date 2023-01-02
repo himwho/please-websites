@@ -1,0 +1,72 @@
+#block { 
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#block img {
+  position:relative; 
+  top: 0;
+  left: 0;
+  height: 100px;
+  width: 100px;
+}
+.graph {
+  width:800px;
+  height:auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+.graph::before {
+  content:url('../images/Graph1.png');
+}
+.graph:hover {
+  content:url('../images/Graph2.png');
+}
+.graph .eye {
+  position: relative;
+  display: block;
+}
+.graph .eye::before {
+  content: "";
+  top: -550px;
+  left: 495px;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 7px;
+  border-radius: 50%;
+  background: #274835;
+  position: absolute;
+  border: 2px solid #537d69;
+  box-sizing: border-box;
+}
+/* Style the video: 100% width and height to cover the entire window */
+.fullscreen {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100vw;
+  height: 100vh;
+}
+.twitter_box {
+	width:150px;
+	position:absolute;
+	top:10px;
+	left:10px;
+	background:white;
+	opacity:.8;
+	margin:10px;
+	z-index:100;
+}
+#back-to-top {
+	bottom:20px;
+	position:fixed;
+	right:20px;
+}
+body{
+	background-color:white;
+	font-family:"Helvetica; Neue",helvetica,arial,sans-serif;
+}

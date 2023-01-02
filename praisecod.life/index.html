@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang='en'>
+<!--<![endif]-->
+	<head>
+		<meta charset='utf-8' />
+		<title> PraiseCod | COD IS DEAD!</title>
+		
+		<meta content='COD IS DEAD!' name='description' />
+		<meta content='please' name='author' />
+		<meta name="distribution" content="global" />
+		<meta name="language" content="en" />
+		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
+
+		<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+		<link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+	</head>
+	<body>
+		<div id=block>
+			<div class="graph">
+				<div class="eye"></div>      
+			</div>
+			<img src='lib/images/PraiseCod1.png'>
+			<img src='lib/images/PraiseCod2.png'>
+		</div>
+
+		<div class="twitter_box">
+			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<br>
+			<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
+		</div>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+		<script type='text/javascript'>
+			document.querySelector("body").addEventListener("mousemove", eyeball);
+			function eyeball() {
+				const eye = document.querySelectorAll(".eye");
+				eye.forEach(function (eye) {
+				let x = eye.getBoundingClientRect().left + eye.clientWidth / 2;
+				let y = eye.getBoundingClientRect().top + eye.clientHeight / 2;
+
+				let radian = Math.atan2(event.pageX - x, event.pageY - y);
+				let rotate = radian * (180 / Math.PI) * -1 + 270;
+				eye.style.transform = "rotate(" + rotate + "deg)";
+				});
+			}
+
+			jQuery(function(){
+				function random(n) {
+					return Math.floor(Math.random() * n);
+				}
+				var transition_time = 750;
+				var waiting_time = 350;
+				var images = $('div#block img');
+				var n = images.length;
+				var current = random(n);
+				images.hide();
+				images.eq(current).show();
+				
+				//get the size of the container
+				var boxHeight = document.getElementById('block').offsetHeight;
+				var boxWidth = document.getElementById('block').offsetWidth;
+				
+				//range of possible image scales
+				var objectMaxHeight = 200;
+				var objectMinHeight = 400;
+				
+				var interval_id = setInterval(function () {
+					images.eq(current).fadeOut(transition_time, function () {
+						current = random(n);
+						
+						//gets reference to selected image
+						var $domImage = images.eq(current);
+						
+						//generates random heights and widths for the image to be shown in
+						var generatedHeight = 
+								Math.floor(
+								Math.random() * (objectMaxHeight - objectMinHeight)
+							 ) + objectMinHeight;
+
+									// assigns values to the image
+						$domImage.css('height', generatedHeight); 
+						$domImage.css('width', "auto"); 
+						
+						var imageAutoWidth = $domImage.width();
+						
+						var generatedYLocation = Math.floor(
+						  Math.random() * (boxHeight - generatedHeight + 1)
+						) + 0;
+						
+						var generatedXLocation = Math.floor(
+							Math.random() * (boxWidth - imageAutoWidth)
+						) + 0;
+						
+						$domImage.css('top', generatedYLocation);
+						$domImage.css('left', generatedXLocation);
+						$domImage.fadeIn(transition_time);
+					});
+				}, 2 * transition_time + waiting_time);
+			})
+
+			function inIframe() {
+				try {
+					return window.self !== window.top;
+				} catch (e) {
+					return true;
+				}
+			}
+			$(document).ready(function(){
+				if (inIframe()) {
+					var	item = document.getElementById("goBackHome");
+					item.style.display = 'none';	
+				}
+			})
+		</script>
+	</body>
+</html>
