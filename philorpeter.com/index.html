@@ -30,12 +30,12 @@
 				return true;
 			}
 		}
-		function checkIfIframe(){
+		$(document).ready(function(){
 			if (inIframe()) {
 				var	item = document.getElementById("goBackHome");
 				item.style.display = 'none';	
 			}
-		}
+		})
 </script>
 </body>
 </html>
