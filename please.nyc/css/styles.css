@@ -6,11 +6,16 @@ body {
 .center-logo {
   margin: 0;
   position: absolute;
-  max-width: 350px;
+  max-width: 200px;
   height: auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+@media only screen and (min-width: 768px) {
+  .center-logo{
+    width: 350px;
+  }
 }
 .image-fader {
   width: 200px;
@@ -119,15 +124,20 @@ body {
   justify-content: center;
 }
 .paper{
-  transition: all .25s;
-  font-family: sans-serif;
-  flex-grow:1;
-  width: 12vh;
-  max-width:150px;
-  height:auto;
-  position:absolute;
-  /*padding:1.75em 1.5em 0 2em;*/
-  /*transform: rotate(-3deg);*/
+    transition: all .25s;
+    font-family: sans-serif;
+    flex-grow:1;
+    width: 12vh;
+    max-width:150px;
+    height:auto;
+    position:absolute;
+    /*padding:1.75em 1.5em 0 2em;*/
+    /*transform: rotate(-3deg);*/
+}
+@media only screen and (min-width: 768px) {
+  .paper{
+    width: 15vw;
+  }
 }
 .paper-static{
   transition: all .25s;
