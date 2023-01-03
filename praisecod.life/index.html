@@ -87,19 +87,17 @@
 						images.eq(current).css('height', generatedHeight); 
 						images.eq(current).css('width', "auto");
 
-						// reset position
-						images.eq(current).css('top', 0); 
-						images.eq(current).css('left', 0);
-						images.eq(current).css('right', 0); 
-						images.eq(current).css('bottom', 0);
-						images.eq(current).css('margin', 0); 
-
 						var imageAutoWidth = images.eq(current).width();
 						var generatedYLocation = Math.floor(Math.random() * (boxHeight - generatedHeight + 1)) + 0;
 						var generatedXLocation = Math.floor(Math.random() * (boxWidth - imageAutoWidth)) + 0;
 						
+						// reset position
+						images.eq(current).css('top', 0); 
+						images.eq(current).css('left', 0);
+						images.eq(current).css('margin', 0); 
+
 						// pick one of the 4 edges of screen
-						var edge = Math.floor(Math.random() * 2);
+						var edge = Math.floor(Math.random() * 4);
 
 						if (edge == 0) { // left edge
 							images.eq(current).css({ WebkitTransform: 'rotate(90deg)'});
@@ -108,11 +106,11 @@
 							images.eq(current).css({ '-o-transform': 'rotate(90deg)'});
 							images.eq(current).css({ '-transform': 'rotate(90deg)'});
 
-							images.eq(current).css('left', -imageAutoWidth);
-							images.eq(current).animate({left: "+="+imageAutoWidth+"px"}, transition_time );
+							images.eq(current).css('left', -generatedHeight);
+							images.eq(current).animate({left: "+="+generatedHeight+"px"}, transition_time );
 							images.eq(current).css('top', generatedYLocation);
 
-							images.eq(current).animate({left: "-="+imageAutoWidth+"px"}, waiting_time );
+							images.eq(current).animate({left: "-="+generatedHeight+"px"}, waiting_time );
 
 						} else if (edge == 1) { // top edge
 							images.eq(current).css({ WebkitTransform: 'rotate(180deg)'});
@@ -134,12 +132,11 @@
 							images.eq(current).css({ '-o-transform': 'rotate(270deg)'});
 							images.eq(current).css({ '-transform': 'rotate(270deg)'});
 
-							images.eq(current).css('margin-right', '-'+imageAutoWidth+'px');
-							images.eq(current).css('left', 'calc(100% - '+imageAutoWidth+'px)');
-							images.eq(current).animate({left: "-="+imageAutoWidth+"px"}, transition_time );
+							images.eq(current).css('left', $(document).width()+generatedHeight);
+							images.eq(current).animate({left: "-="+generatedHeight+"px"}, transition_time );
 							images.eq(current).css('top', generatedYLocation);
 
-							images.eq(current).animate({left: "+="+imageAutoWidth+"px"}, waiting_time );
+							images.eq(current).animate({left: "+="+generatedHeight+"px"}, waiting_time );
 
 						} else if (edge == 3) { // bottom edge
 							images.eq(current).css({ WebkitTransform: 'rotate(0deg)'});
@@ -148,7 +145,6 @@
 							images.eq(current).css({ '-o-transform': 'rotate(0deg)'});
 							images.eq(current).css({ '-transform': 'rotate(0deg)'});
 
-							images.eq(current).css('margin-bottom', +generatedHeight+'px');
 							images.eq(current).css('top', $(window).height()+generatedHeight);
 							images.eq(current).animate({top: "-="+generatedHeight+"px"}, transition_time );
 							images.eq(current).css('left', generatedXLocation);
@@ -157,7 +153,7 @@
 						} else {
 							// error?
 						}
-						console.log("Edge: "+edge, "Image: "+images.eq(current), "Height: "+generatedHeight, "Duration: "+transition_time);
+						//console.log("Edge: "+edge, "Image: "+images.eq(current), "Height: "+generatedHeight, "Duration: "+transition_time);
 				    } );
 				}, 2 * transition_time + waiting_time);
 
