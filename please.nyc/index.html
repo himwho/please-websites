@@ -89,6 +89,9 @@
                     <div class="paper-static">
                         <img src="img/${name}.png">
                     </div>
+                `;
+
+                /* // to be added above
                 </section>
                 <section class="papers store-overlay-items-row" style="margin-top:-75px;">
                     <div class="paper nozoom" style="margin-left:15px;">
@@ -109,15 +112,14 @@
                         <img src="img/buy2.png">
                     </div>
                 </section>
-                `;
+                */
 
                 // show the modal
                 modalOuter.classList.add('open');
             }
             
             function closeModal() {
-                modalInner.innerHTML = `
-                `;
+                modalInner.innerHTML = ``;
                 modalOuter.classList.remove('open');
             }
 
@@ -159,7 +161,7 @@
 
                 for ( var i=0; i < productCardButtons.length; i++ ) {
                     var thisDiv = productCardButtons[i];
-                    var postItOffsetDistance = 150; // the minimum amount for a conflict
+                    var postItOffsetDistance = thisDiv.offsetWidth; // the minimum amount for a conflict
                     var newPoint; // used to track new testing point
                     var foundConflict = true;
                     var emergencyConflicts = 0; // used to stop tests when too many happen
