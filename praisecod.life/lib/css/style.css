@@ -7,20 +7,18 @@
 #block img {
   position:relative; 
   top: 0;
-  left: 0;
-  height: 100px;
-  width: 100px;
+  left: -1000;
+  height: 0px;
+  width: 0px;
 }
 .graph {
-  width:800px;
+  width:900px;
   height:auto;
   position: absolute;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-}
-.graph::before {
   content:url('../images/Graph1.png');
 }
 .graph:hover {
@@ -67,6 +65,7 @@
 	right:20px;
 }
 body{
+  margin: 0px;
 	background-color:white;
 	font-family:"Helvetica; Neue",helvetica,arial,sans-serif;
 }

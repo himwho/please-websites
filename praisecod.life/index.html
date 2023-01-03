@@ -49,57 +49,120 @@
 			}
 
 			jQuery(function(){
-				function random(n) {
+				function imagePicker(n) {
 					return Math.floor(Math.random() * n);
 				}
-				var transition_time = 750;
-				var waiting_time = 350;
+
+				// starting times
+				var transition_time = Math.floor(Math.random() * (2500 - 350 + 1) + 350);
+				var waiting_time = Math.floor(Math.random() * (2000 - 250 + 1) + 250);
+				
 				var images = $('div#block img');
 				var n = images.length;
-				var current = random(n);
-				images.hide();
-				images.eq(current).show();
-				
-				//get the size of the container
-				var boxHeight = document.getElementById('block').offsetHeight;
-				var boxWidth = document.getElementById('block').offsetWidth;
-				
+				var current = imagePicker(n);
+								
 				//range of possible image scales
 				var objectMaxHeight = 200;
 				var objectMinHeight = 400;
-				
-				var interval_id = setInterval(function () {
-					images.eq(current).fadeOut(transition_time, function () {
-						current = random(n);
-						
-						//gets reference to selected image
-						var $domImage = images.eq(current);
-						
-						//generates random heights and widths for the image to be shown in
-						var generatedHeight = 
-								Math.floor(
-								Math.random() * (objectMaxHeight - objectMinHeight)
-							 ) + objectMinHeight;
 
-									// assigns values to the image
-						$domImage.css('height', generatedHeight); 
-						$domImage.css('width', "auto"); 
+				images.hide();
+				images.eq(current).show();
+
+				// Periodically, we fadeOut the current image and fadeIn a random one
+				var interval_id = setInterval( function(){
+					//get the size of the container
+					var boxHeight = document.getElementById('block').offsetHeight;
+					var boxWidth = document.getElementById('block').offsetWidth;
+					// new random time
+					transition_time = Math.floor(Math.random() * (1500 - 350 + 1) + 350);
+					waiting_time = Math.floor(Math.random() * (2000 - 250 + 1) + 250);
+
+				    images.eq( current ).fadeOut( 5, function(){
+				        current = imagePicker(n);
+				        images.eq(current).fadeIn(5);
+				        //generates random heights and widths for the image to be shown in
+						var generatedHeight =  Math.floor(Math.random() * (objectMaxHeight - objectMinHeight)) + objectMinHeight;
+
+				        // assigns values to the image
+						images.eq(current).css('height', generatedHeight); 
+						images.eq(current).css('width', "auto");
+
+						// reset position
+						images.eq(current).css('top', 0); 
+						images.eq(current).css('left', 0);
+						images.eq(current).css('right', 0); 
+						images.eq(current).css('bottom', 0);
+						images.eq(current).css('margin', 0); 
+
+						var imageAutoWidth = images.eq(current).width();
+						var generatedYLocation = Math.floor(Math.random() * (boxHeight - generatedHeight + 1)) + 0;
+						var generatedXLocation = Math.floor(Math.random() * (boxWidth - imageAutoWidth)) + 0;
 						
-						var imageAutoWidth = $domImage.width();
-						
-						var generatedYLocation = Math.floor(
-						  Math.random() * (boxHeight - generatedHeight + 1)
-						) + 0;
-						
-						var generatedXLocation = Math.floor(
-							Math.random() * (boxWidth - imageAutoWidth)
-						) + 0;
-						
-						$domImage.css('top', generatedYLocation);
-						$domImage.css('left', generatedXLocation);
-						$domImage.fadeIn(transition_time);
-					});
+						// pick one of the 4 edges of screen
+						var edge = Math.floor(Math.random() * 2);
+
+						if (edge == 0) { // left edge
+							images.eq(current).css({ WebkitTransform: 'rotate(90deg)'});
+							images.eq(current).css({ '-moz-transform': 'rotate(90deg)'});
+							images.eq(current).css({ '-ms-transform': 'rotate(90deg)'});
+							images.eq(current).css({ '-o-transform': 'rotate(90deg)'});
+							images.eq(current).css({ '-transform': 'rotate(90deg)'});
+
+							images.eq(current).css('left', -imageAutoWidth);
+							images.eq(current).animate({left: "+="+imageAutoWidth+"px"}, transition_time );
+							images.eq(current).css('top', generatedYLocation);
+
+							images.eq(current).animate({left: "-="+imageAutoWidth+"px"}, waiting_time );
+
+						} else if (edge == 1) { // top edge
+							images.eq(current).css({ WebkitTransform: 'rotate(180deg)'});
+							images.eq(current).css({ '-moz-transform': 'rotate(180deg)'});
+							images.eq(current).css({ '-ms-transform': 'rotate(180deg)'});
+							images.eq(current).css({ '-o-transform': 'rotate(180deg)'});
+							images.eq(current).css({ '-transform': 'rotate(180deg)'});
+
+							images.eq(current).css('top', -generatedHeight);
+							images.eq(current).animate({top: "+="+generatedHeight+"px"}, transition_time );
+							images.eq(current).css('left', generatedXLocation);
+
+							images.eq(current).animate({top: "-="+generatedHeight+"px"}, waiting_time );
+							
+						} else if (edge == 2) { // right edge
+							images.eq(current).css({ WebkitTransform: 'rotate(270deg)'});
+							images.eq(current).css({ '-moz-transform': 'rotate(270deg)'});
+							images.eq(current).css({ '-ms-transform': 'rotate(270deg)'});
+							images.eq(current).css({ '-o-transform': 'rotate(270deg)'});
+							images.eq(current).css({ '-transform': 'rotate(270deg)'});
+
+							images.eq(current).css('margin-right', '-'+imageAutoWidth+'px');
+							images.eq(current).css('left', 'calc(100% - '+imageAutoWidth+'px)');
+							images.eq(current).animate({left: "-="+imageAutoWidth+"px"}, transition_time );
+							images.eq(current).css('top', generatedYLocation);
+
+							images.eq(current).animate({left: "+="+imageAutoWidth+"px"}, waiting_time );
+
+						} else if (edge == 3) { // bottom edge
+							images.eq(current).css({ WebkitTransform: 'rotate(0deg)'});
+							images.eq(current).css({ '-moz-transform': 'rotate(0deg)'});
+							images.eq(current).css({ '-ms-transform': 'rotate(0deg)'});
+							images.eq(current).css({ '-o-transform': 'rotate(0deg)'});
+							images.eq(current).css({ '-transform': 'rotate(0deg)'});
+
+							images.eq(current).css('margin-bottom', +generatedHeight+'px');
+							images.eq(current).css('top', $(window).height()+generatedHeight);
+							images.eq(current).animate({top: "-="+generatedHeight+"px"}, transition_time );
+							images.eq(current).css('left', generatedXLocation);
+
+							images.eq(current).animate({top: "+="+generatedHeight+"px"}, waiting_time );
+						} else {
+							// error?
+						}
+						console.log("Edge: "+edge, "Image: "+images.eq(current), "Height: "+generatedHeight, "Duration: "+transition_time);
+				    } );
 				}, 2 * transition_time + waiting_time);
+
+				// You can then stop the effect with:
+				// clearInterval( interval_id );
 			})
 
 			function inIframe() {
