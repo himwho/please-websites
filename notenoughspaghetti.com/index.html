@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang='en'>
+<!--<![endif]-->
+	<head>
+		<meta charset='utf-8' />
+		<title>Not Enough Spaghetti | That's not enough spaghetti!</title>
+		
+		<meta content='That's not enough spaghetti!' name='description' />
+		<meta content='please' name='author' />
+		<meta name="distribution" content="global" />
+		<meta name="language" content="en" />
+		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
+		
+		<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
+		<link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+	</head>
+	<body>
+		<canvas id="interactive"></canvas>
+		<img id="plate" src="lib/images/plate.svg">
+		<!-- <img id="fork" src="lib/images/fork.svg"> -->
+<!-- 	
+		<div class="twitter_box">
+			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+			<br>
+			<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
+		</div>
+		<script type="text/javascript">
+			function inIframe() {
+				try {
+					return window.self !== window.top;
+				} catch (e) {
+					return true;
+				}
+			}
+			$(document).ready(function(){
+				if (inIframe()) {
+					var	item = document.getElementById("goBackHome");
+					item.style.display = 'none';	
+				}
+			})
+		</script>
+ -->
+
+		<script type="text/javascript">
+			// Set the canvas for the visuals
+			const canvas = document.getElementById("interactive");
+
+			// Set window height and width variables
+			let width = window.innerWidth,
+				height = window.innerHeight;
+
+			// Add Matter modules
+			const Engine = Matter.Engine,
+			  Render = Matter.Render,
+			  Runner = Matter.Runner,
+			  Body = Matter.Body,
+			  Mouse = Matter.Mouse,
+			  World = Matter.World,
+			  Bodies = Matter.Bodies,
+			  Composites = Matter.Composites,
+			  Composite = Matter.Composite;
+
+			// Create an engine
+			const engine = Engine.create(),
+			  world = engine.world;
+
+			// Create a renderer
+			const render = Render.create({
+			  engine: engine,
+			  canvas: canvas,
+			  options: {
+				showAngleIndicator: false,
+				wireframes: false,
+				background: "#fff",
+				width: width,
+				height: height,
+				showAngleIndicator: false,
+				showCollisions: false,
+				showVelocity: false
+			  }
+			});
+
+			// Create runner
+			const runner = Runner.create();
+			Runner.run(runner, engine);
+
+			// Create the ground for the noodles to splatter against but offset it so that the mess is hidden from sight
+			const ground = Bodies.rectangle(width / 2, height + 100, width, 80, {
+			  isStatic: true,
+			  label: "ground",
+			  render: {
+				visible: false
+			  }
+			});
+
+			// Create a collision event for the noodles that hit the ground
+			Matter.Events.on(engine, "collisionStart", function(event) {
+			  let pairs = event.pairs;
+			  pairs.forEach(function(pair) {
+				// Check if the collision is between the noodle and the ground
+				if (pair.bodyB.label === "noodle" && pair.bodyA.label === "ground") {
+				  // Remove the noodle from the world
+				  Matter.World.remove(world, pair.bodyB, [(deep = true)]);
+				  // Run the noodle restrictor function
+				  noodleRestrictor();
+				}
+			  });
+			});
+
+			// Define how long the noodle should be
+			let noodleLength = 45;
+			// Define colours for the noodles
+			var noodle0 = "#edd683";
+			var noodle1 = "#f0dd99";
+			// Count the total number of noodles that have been dropped
+			let noodlesDropped = 0;
+			// Count the number of noodles that were initially created
+			let noodlesCount = 0;
+			// Define how many noodles will be on screen
+			let noodlesMax = 20;
+			// Equal the noodle timeout to the length of the noodles to keep world object totals in balance
+			let noodleTimeout = noodleLength;
+
+			// Add new noodles when all parts of the previous noodle are removed
+			const noodleRestrictor = function() {
+			  // Count down the timeout
+			  noodleTimeout--;
+			  // When the timeout reaches 0 then it is time to add a new noodle
+			  if (noodleTimeout <= 0) {
+				// Add the new noodle
+				World.add(engine.world, noodle());
+				// Reset the timeout to the length of the noodle to keep world objects in balance
+				noodleTimeout = noodleLength;
+			  }
+			};
+
+			// Define the function for adding a new noodle
+			const noodle = function() {
+			  // Create a random number to vary the position of where the noodle will be dropped from
+			  let random = Math.floor(Math.random() * 100 - 50);
+			  // Create a bit of variation in noodle appearance
+			  let type = noodle0;
+			  // If the number is divisible by 2 then change the appearance
+			  if (noodlesDropped % 2 === 0) {
+				type = noodle1;
+			  }
+			  // Add to the total of spaghetti noodles dropped
+			  noodlesDropped++;
+			  // Define the noodle properties
+			  const particleOptions = {
+				  friction: 0.05,
+				  frictionAir: 0.1,
+				  label: "noodle",
+				  render: { visible: false }
+				},
+				constraintOptions = {
+				  stiffness: 0.06,
+				  render: {
+					strokeStyle: type,
+					lineWidth: 10
+				  }
+				};
+			  // Create new noodle
+			  return Composites.softBody(
+				width / 2 + random,
+				-400,
+				1,
+				noodleLength,
+				5,
+				5,
+				false,
+				4,
+				particleOptions,
+				constraintOptions
+			  );
+			};
+
+			let forkLength = width / 2;
+			if (forkLength > 500) {
+			  forkLength = 500;
+			}
+
+			// Create a fork to interact with the spaghetti noodles
+			function Fork() {
+				const forkImg = document.querySelector('#fork')
+				this.cx = width * 0.5
+				this.cy = height * 0.5
+				const thickness = 25
+				const wallColor = '#00000000'
+
+				const topProng = Bodies.rectangle(this.cx - 60, this.cy, thickness, 150, {
+					isStatic: true,
+					render: { fillStyle: wallColor }
+				})
+				const bottomProng = Bodies.rectangle(this.cx - 60, this.cy, thickness, 150, {
+					isStatic: true,
+					render: { fillStyle: wallColor }
+				})
+				const connector = Bodies.rectangle(this.cx + 37, this.cy, thickness, 150, {
+					isStatic: true,
+					angle: Math.PI / 180,
+					render: { fillStyle: wallColor }
+				})
+				const handle = Bodies.rectangle(this.cx - 10, height, 85, thickness * 2, {
+					isStatic: true,
+					render: { fillStyle: wallColor }
+				})
+				forkImg.style.transform = `translate(${this.cx - width / 2}px, ${this.cy - height / 2}px)`
+				Composite.add(engine.world, [topProng, bottomProng, connector, handle])
+
+				this.setPosition = pos => {
+					this.cx = pos.x
+					this.cy = pos.y
+					Body.setPosition(left, { x: this.cx - 60, y: this.cy })
+					Body.setPosition(right, { x: this.cx + 37, y: this.cy })
+					Body.setPosition(bottom, { x: this.cx - 10, y: this.cy + 72 })
+					forkImg.style.transform = `translate(${this.cx - width / 2}px, ${this.cy - height / 2}px)`
+				}
+			}
+
+			function Plate() {
+				const plateImg = document.querySelector('#plate')
+				let plateWidth = plateImg.offsetWidth;
+				let plateHeight = plateImg.offsetHeight;
+				this.cx = width * 0.5
+				this.cy = height * 0.5
+				const thickness = 25
+				const wallColor = '#00000000'
+
+				const left = Bodies.rectangle(this.cx - plateWidth/2, height-plateHeight, thickness, thickness, {
+					chamfer: { radius: 10 },
+					isStatic: true,
+					angle: Math.PI / 180 * -15,
+					render: { fillStyle: wallColor }
+				})
+				const right = Bodies.rectangle(this.cx + plateWidth/2, height-plateHeight, thickness, thickness, {
+					chamfer: { radius: 10 },
+					isStatic: true,
+					angle: Math.PI / 180 * 15,
+					render: { fillStyle: wallColor }
+				})
+				const bottom = Bodies.rectangle(this.cx, height, plateWidth, thickness, {
+					chamfer: { radius: 20 },
+					isStatic: true,
+					render: { fillStyle: wallColor }
+				})
+				plateImg.style.transform = `translate(${this.cx - plateWidth/2}px, ${height}px)`
+				Composite.add(engine.world, [left, right, bottom])
+
+				this.setPosition = pos => {
+					this.cx = pos.x
+					this.cy = pos.y
+					Body.setPosition(left, { x: this.cx - 60, y: this.cy })
+					Body.setPosition(right, { x: this.cx + 37, y: this.cy })
+					Body.setPosition(bottom, { x: this.cx - 10, y: this.cy + 72 })
+					plateImg.style.transform = `translate(${this.cx - width / 2}px, ${this.cy - height / 2}px)`
+				}
+			}
+
+			//fork = new Fork()
+			plate = new Plate()
+
+			// Add a mouse controller
+			const mouse = Mouse.create(render.canvas);
+
+			// Create starting condition for adding noodles
+			let addNoodles = true;
+
+			// // Define a mouse click event
+			// window.addEventListener("mousedown", function() {
+			// });
+
+			// // Define the mouse click release event
+			// window.addEventListener("mouseup", function() {
+			// });
+
+			// Add the ground to the world
+			World.add(engine.world, ground);
+
+			// Run the engine
+			Engine.run(engine);
+
+			// Run the renderer
+			Render.run(render);
+
+			// When the document has loaded
+			document.addEventListener("DOMContentLoaded", function(event) {
+			  // Start an interval for adding noodles
+			  addNoodles = setInterval(function() {
+				// Count whether the maximum number of noodles has been added
+				if (noodlesCount > noodlesMax) {
+				  // If so then clear the interval
+				  clearInterval(addNoodles);
+				  // Don't add any more noodles!
+				  addNoodles = false;
+				  // Exit the function
+				  return;
+				}
+				// If the function is still running then add a new noodle
+				World.add(engine.world, noodle());
+				// Count the number of noodles added
+				noodlesCount++;
+			  }, 200);
+			});
+		</script>
+	</body>
+</html>

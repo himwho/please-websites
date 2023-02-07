@@ -1,0 +1,12 @@
+#plate {
+  width: 50vw;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 0px;
+}
+
+#plate, #fork {
+  position: absolute;
+  pointer-events: none;
+}

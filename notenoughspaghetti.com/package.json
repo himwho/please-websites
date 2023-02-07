@@ -1,0 +1,21 @@
+{
+  "name": "notenoughspaghetti.com",
+  "version": "1.0.0",
+  "description": "That's not enough spaghetti!",
+  "main": "index.html",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "start": "browser-sync start --server --files '*'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "please",
+  "license": "ISC",
+  "dependencies": {
+    "matter-js": "^0.18.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.26.14"
+  }
+}
