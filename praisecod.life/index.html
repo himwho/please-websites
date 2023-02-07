@@ -17,23 +17,39 @@
 
 		<link rel="stylesheet" href="lib/css/style.css" type="text/css" />
 		<link href='https://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 	</head>
 	<body>
 		<div id=block>
 			<div class="graph">
 				<div class="eye"></div>      
 			</div>
-			<img src='lib/images/PraiseCod1.png'>
-			<img src='lib/images/PraiseCod2.png'>
+			<img src='lib/images/PraiseCod1.png' width="900" height="700">
+			<img src='lib/images/PraiseCod2.png' width="900" height="700">
 		</div>
-
-		<div class="twitter_box">
+<!-- 
+ 		<div class="twitter_box">
 			<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
 			<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 			<br>
 			<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
 		</div>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+		<script type="text/javascript">
+			function inIframe() {
+				try {
+					return window.self !== window.top;
+				} catch (e) {
+					return true;
+				}
+			}
+			$(document).ready(function(){
+				if (inIframe()) {
+					var	item = document.getElementById("goBackHome");
+					item.style.display = 'none';	
+				}
+			})
+		</script>
+ -->
 		<script type='text/javascript'>
 			document.querySelector("body").addEventListener("mousemove", eyeball);
 			function eyeball() {
@@ -159,20 +175,6 @@
 
 				// You can then stop the effect with:
 				// clearInterval( interval_id );
-			})
-
-			function inIframe() {
-				try {
-					return window.self !== window.top;
-				} catch (e) {
-					return true;
-				}
-			}
-			$(document).ready(function(){
-				if (inIframe()) {
-					var	item = document.getElementById("goBackHome");
-					item.style.display = 'none';	
-				}
 			})
 		</script>
 	</body>

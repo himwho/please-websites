@@ -3,84 +3,84 @@
 <html dir="ltr" lang="en-US">
 
 <head>
-<title>Menacing Minstrel</title>
+    <title>Menacing Minstrel</title>
 
-<style type="text/css" media="screen">
-/* basic page layout */
-body{}
-div#page{ width: 600px; margin: 0 auto; }
-a{ color: #09f; text-decoration: none; }
+    <style type="text/css" media="screen">
+    /* basic page layout */
+    body{}
+    div#page{ width: 600px; margin: 0 auto; }
+    a{ color: #09f; text-decoration: none; }
 
-<style type="text/css" media="screen">
-.guess_box{
-  width:150px;
-  height:50px;
-  position:relative;
-  top:10px;
-  left:10px;
-  background:white;
-  opacity:.8;
-  z-index:55;
-}
-div#stage{
-  overflow:hidden;
-  z-index:50;  
-  position: relative; /* necessary to do absolute positioning of the image relative to this div's position */
-  /* set div's size and layout */
-  width: 100vw;
-  height: 90vh;
-  /* put a border around it so we can see where it ends */
-  border: 1px solid #ccc;
-}
-.overlaybutton{
-  width: 50vw;
-  height: 50vh;
-  margin-left: 25vw;
-  margin-right: 25vw;
-  margin-top: 25vh;
-  margin-bottom: 25vh;
-  z-index: 100;
-  position: absolute;
-  background: rgba(0,0,0,0.5);
-}
-#follower{
-  display: none;
-}
-img#follower{ position: absolute; }
-</style>
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+    <style type="text/css" media="screen">
+    .guess_box{
+      width:150px;
+      height:50px;
+      position:relative;
+      top:10px;
+      left:10px;
+      background:white;
+      opacity:.8;
+      z-index:55;
+    }
+    div#stage{
+      overflow:hidden;
+      z-index:50;  
+      position: relative; /* necessary to do absolute positioning of the image relative to this div's position */
+      /* set div's size and layout */
+      width: 100vw;
+      height: 90vh;
+      /* put a border around it so we can see where it ends */
+      border: 1px solid #ccc;
+    }
+    .overlaybutton{
+      width: 50vw;
+      height: 50vh;
+      margin-left: 25vw;
+      margin-right: 25vw;
+      margin-top: 25vh;
+      margin-bottom: 25vh;
+      z-index: 100;
+      position: absolute;
+      background: rgba(0,0,0,0.5);
+    }
+    #follower{
+      display: none;
+    }
+    img#follower{ position: absolute; }
+    </style>
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
 </head>
 
-<body>
-<audio src="assets/minstrel.ogg" id="myAudio" type="audio/ogg"></audio>
-<button class="overlaybutton" id="startButton">START</button>
-<div id="stage">
-  <img src="imgs/gtr2.png" id="follower" alt="minstrel" />
-</div>
+    <body>
+    <audio src="assets/minstrel.ogg" id="myAudio" type="audio/ogg"></audio>
+    <button class="overlaybutton" id="startButton">START</button>
+    <div id="stage">
+      <img src="imgs/gtr2.png" id="follower" alt="minstrel" />
+    </div>
 
-<script type="text/javascript" src="js/minstrel.js"></script>
-<script type='text/javascript'>
-  function inIframe() {
-	try {
-	  return window.self !== window.top;
-	} catch (e) {
-	  return true;
-	}
-  }
-  $(document).ready(function(){
-	if (inIframe()) {
-	  var item = document.getElementById("goBackHome");
-	  item.style.display = 'none';  
-	}
-  })
-</script>
-
-<div class="guess_box">
-  <a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
-  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-  <br>
-  <a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
-</div>
-
-</body>
+    <script type="text/javascript" src="js/minstrel.js"></script>
+    <!-- 
+        <div class="twitter_box">
+          <a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          <br>
+          <a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
+        </div>
+        <script type="text/javascript">
+          function inIframe() {
+            try {
+              return window.self !== window.top;
+            } catch (e) {
+              return true;
+            }
+          }
+          $(document).ready(function(){
+            if (inIframe()) {
+              var item = document.getElementById("goBackHome");
+              item.style.display = 'none';  
+            }
+          })
+        </script>
+     -->
+    </body>
 </html>

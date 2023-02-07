@@ -34,7 +34,7 @@ endif
 install: 
 	# install all deps
 
-all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle chaffedorgangster praisecod
+all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod
 
 please:
 	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --profile personal

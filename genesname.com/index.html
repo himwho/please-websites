@@ -25,12 +25,14 @@
 				</div>
 				<br>
 				<strong>If you are gene please tell us your name!</strong>
-				<br><br>
+<!--
+ 				<br><br>
 				<a href="https://twitter.com/PleaseWebsite" class="twitter-follow-button" data-show-count="false" data-lang="en">Follow @PleaseWebsite</a>
 				<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 				</strong><br/>
 				<a id="goBackHome" href="https://pleasewebsite.com">Back to PleaseWebsite</a>
-			</div>
+ -->
+ 			</div>
 
 			<!-- The video -->
 			<video loop id="gnVideo" poster="/lib/images/genenameposter.png">
@@ -67,8 +69,8 @@
 			 	$(document).ready(function(){
 					if (inIframe()) {
 						//console.log("IM AN IFRAME!");
-						var	item = document.getElementById("goBackHome");
-						item.style.display = 'none';	
+						//var	item = document.getElementById("goBackHome");
+						//item.style.display = 'none';	
 					}
 			 		$('.guess input').on('keyup', function(e){
 			 			var length = $(this).val().length;
