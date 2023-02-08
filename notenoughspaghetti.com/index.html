@@ -87,8 +87,7 @@
 			  }
 			});
 
-			var plate;
-			var fork;
+			let plate;
 
 			// Create runner
 			const runner = Runner.create();
@@ -190,35 +189,25 @@
 				const thickness = 25
 				const wallColor = '#00000000'
 
-				const left = Bodies.rectangle(this.cx - plateWidth/2, height-plateHeight, thickness, thickness, {
+				const left = Bodies.rectangle(this.cx - plateWidth/2, height-plateHeight*2, thickness, thickness, {
 					chamfer: { radius: 10 },
 					isStatic: true,
 					angle: Math.PI / 180 * -15,
 					render: { fillStyle: wallColor }
 				})
-				const right = Bodies.rectangle(this.cx + plateWidth/2, height-plateHeight, thickness, thickness, {
+				const right = Bodies.rectangle(this.cx + plateWidth/2, height-plateHeight*2, thickness, thickness, {
 					chamfer: { radius: 10 },
 					isStatic: true,
 					angle: Math.PI / 180 * 15,
 					render: { fillStyle: wallColor }
 				})
-				const bottom = Bodies.rectangle(this.cx, height, plateWidth, thickness, {
+				const bottom = Bodies.rectangle(this.cx, height-plateHeight/2, plateWidth, thickness, {
 					chamfer: { radius: 20 },
 					isStatic: true,
 					label: "plate",
 					render: { fillStyle: wallColor }
 				})
-				plateImg.style.transform = `translate(${this.cx - plateWidth/2}px, ${height}px)`
 				Composite.add(engine.world, [left, right, bottom])
-
-				this.setPosition = pos => {
-					this.cx = pos.x
-					this.cy = pos.y
-					Body.setPosition(left, { x: this.cx - 60, y: this.cy })
-					Body.setPosition(right, { x: this.cx + 37, y: this.cy })
-					Body.setPosition(bottom, { x: this.cx - 10, y: this.cy + 72 })
-					plateImg.style.transform = `translate(${this.cx - plateWidth / 2}px, ${height}px)`
-				}
 			}
 
 			// Add a mouse controller
