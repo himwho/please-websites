@@ -1,0 +1,26 @@
+{
+  "name": "solar-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ammo.js": "github:kripken/ammo.js",
+    "ava": "^5.2.0",
+    "dat.gui": "^0.7.9",
+    "fs-extra": "^11.1.1",
+    "three": "^0.148.0"
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "buffer": "^5.7.1",
+    "crypto-browserify": "^3.12.0",
+    "events": "^3.3.0",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "stream-browserify": "^3.0.0"
+  }
+}

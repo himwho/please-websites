@@ -23,6 +23,8 @@ PRAISECOD = please-praisecod.life-public
 DDIY = please-ddiy.pro-public
 STRIPPERBOAT = please-strippersonaboat.com-public
 PATRICK = please-patricksneedforspeed.com-public
+NOTENOUGHSPAGHETTI = please-notenoughspaghetti.com-public
+PLENTYSPAGHETTI = please-plentyofspaghetti.com-public
 
 # getting OS type
 ifeq ($(OS),Windows_NT)
@@ -107,4 +109,10 @@ strippersonaboat:
 
 patrick:
 	aws s3 sync patricksneedforspeed.com/ s3://$(PATRICK) --cache-control no-cache --exclude '.DS_Store' --profile personal
+
+notenoughspaghetti:
+	aws s3 sync notenoughspaghetti.com/ s3://$(NOTENOUGHSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
+
+plentyspaghetti:
+	aws s3 sync plentyofspaghetti.com/ s3://$(PLENTYSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
