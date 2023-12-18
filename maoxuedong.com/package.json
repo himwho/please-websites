@@ -9,7 +9,7 @@
   "author": "Dylan Marcus",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.1"
   },
   "devDependencies": {
     "browser-sync": "^2.26.14"
