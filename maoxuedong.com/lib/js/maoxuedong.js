@@ -140,7 +140,7 @@ addIngredientBtn.addEventListener("click", addMao);
 
 // preload ingredients
 window.onload = function() {
-  for (var i = 1; i < 100; i++) addChili();
+  for (var i = 1; i < 150; i++) addChili();
   for (var i = 1; i < 4; i++) addIngredient();
   for (var i = 1; i < 50; i++) addChili();
   for (var i = 1; i < 3; i++) addMao();
