@@ -20,6 +20,7 @@ FRENCHFRYANGLE = please-frenchfryangle.com-public
 PARALLELOGRAMMY = please-parallelogrammy.com-public
 CHAFFEDORGANGSTER = please-chafedorgagnster.com-public
 PRAISECOD = please-praisecod.life-public
+MAOXUEDONG = please-maoxuedong.com-public
 DDIY = please-ddiy.pro-public
 STRIPPERBOAT = please-strippersonaboat.com-public
 PATRICK = please-patricksneedforspeed.com-public
@@ -36,7 +37,7 @@ endif
 install: 
 	# install all deps
 
-all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod
+all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod maoxuedong
 
 please:
 	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --profile personal
@@ -100,6 +101,9 @@ chaffedorgangster:
 
 praisecod:
 	aws s3 sync praisecod.life/ s3://$(PRAISECOD) --cache-control no-cache --exclude '.DS_Store' --profile personal
+
+maoxuedong:
+	aws s3 sync maoxuedong.com/ s3://$(MAOXUEDONG) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 ddiy:
 	aws s3 sync ddiy.pro/ s3://$(DDIY) --cache-control no-cache --exclude '.DS_Store' --profile personal
