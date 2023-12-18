@@ -7,7 +7,7 @@ const addIngredientBtn = document.getElementById("add-ingredient");
 // construct array of ingredients and mao heads
 var chilis = new Array();
 // fill with images
-chilis[0] = 'lib/images/chili1.png';
+chilis[0] = 'lib/images/chili10.png';
 chilis[1] = 'lib/images/chili2.png';
 chilis[2] = 'lib/images/chili3.png';
 chilis[3] = 'lib/images/chili4.png';
@@ -24,9 +24,10 @@ chilis[13] = 'lib/images/chili8.png';
 chilis[14] = 'lib/images/chili9.png';
 chilis[15] = 'lib/images/chili10.png';
 var ingredients = new Array();
-ingredients[0] = 'lib/images/meat2.png';
-ingredients[1] = 'lib/images/meat3.png';
-ingredients[2] = 'lib/images/tripe1.png';
+ingredients[0] = 'lib/images/meat1.png';
+ingredients[1] = 'lib/images/meat2.png';
+ingredients[2] = 'lib/images/meat3.png';
+ingredients[3] = 'lib/images/tripe1.png';
 var maos = new Array();
 maos[0] = 'lib/images/mao1.png';
 maos[1] = 'lib/images/mao2.png';
