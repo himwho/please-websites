@@ -21,9 +21,7 @@ PARALLELOGRAMMY = please-parallelogrammy.com-public
 CHAFFEDORGANGSTER = please-chafedorgagnster.com-public
 PRAISECOD = please-praisecod.life-public
 MAOXUEDONG = please-maoxuedong.com-public
-DDIY = please-ddiy.pro-public
-STRIPPERBOAT = please-strippersonaboat.com-public
-PATRICK = please-patricksneedforspeed.com-public
+HEATEDMAMMARIES = please-heatedmammaries.com-public
 NOTENOUGHSPAGHETTI = please-notenoughspaghetti.com-public
 PLENTYSPAGHETTI = please-plentyofspaghetti.com-public
 
@@ -105,14 +103,8 @@ praisecod:
 maoxuedong:
 	aws s3 sync maoxuedong.com/ s3://$(MAOXUEDONG) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
-ddiy:
-	aws s3 sync ddiy.pro/ s3://$(DDIY) --cache-control no-cache --exclude '.DS_Store' --profile personal
-
-strippersonaboat:
-	aws s3 sync strippersonaboat.com/ s3://$(STRIPPERBOAT) --cache-control no-cache --exclude '.DS_Store' --profile personal
-
-patrick:
-	aws s3 sync patricksneedforspeed.com/ s3://$(PATRICK) --cache-control no-cache --exclude '.DS_Store' --profile personal
+heatedmammaries:
+	aws s3 sync heatedmammaries.com/ s3://$(HEATEDMAMMARIES) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 notenoughspaghetti:
 	aws s3 sync notenoughspaghetti.com/ s3://$(NOTENOUGHSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
