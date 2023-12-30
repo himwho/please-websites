@@ -7,12 +7,10 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - Make a favicon for all websites
 - meatgravy
   - add analytics
-  - design gravy boat logo (brendan)
 - fuckingsarkis
 - genesname
   - add analytics
 - philorpeter
-  - format for desktop
   - add analytics
 - frenchfryangle
 - parallelograndma
@@ -27,7 +25,6 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - format
 - heatedmammories
   - edit together content (brendan)
-  - fix the certificates
 - chaffedorgangster
   - edit together content (brendan)
 - toomuchspaghetti
@@ -38,10 +35,7 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - add analytics
 - menacingminstrel
   - add analytics
-  - format
 - praisecod
-  - edit together content (brendan)
-  - migrate to aws, route both domains via certificate
 
 ## Instructions for Hosting on AWS
  - create bucket with format: please-[website-domain]-public
