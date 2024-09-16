@@ -110,5 +110,6 @@ notenoughspaghetti:
 	aws s3 sync notenoughspaghetti.com/ s3://$(NOTENOUGHSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
 plentyspaghetti:
-	aws s3 sync plentyofspaghetti.com/ s3://$(PLENTYSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
+	cd plentyofspaghetti.com && npm run build
+	aws s3 sync plentyofspaghetti.com/dist s3://$(PLENTYSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
