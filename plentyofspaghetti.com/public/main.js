@@ -18,7 +18,10 @@ function addStars() {
     starVertices.push(x, y, z);
   }
 
-  starsGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
+  starsGeometry.setAttribute(
+    'position',
+    new THREE.Float32BufferAttribute(starVertices, 3)
+  );
 
   const starsMaterial = new THREE.PointsMaterial({ color: 0xffffff });
   const starField = new THREE.Points(starsGeometry, starsMaterial);
@@ -104,7 +107,8 @@ for (let i = 0; i < planetCount; i++) {
   scene.add(planet);
 
   // Add sauce rings to two specific planets
-  if (i === 2 || i === 4) { // Adding rings to the 3rd and 5th planets
+  if (i === 2 || i === 4) {
+    // Adding rings to the 3rd and 5th planets
     addSauceRing(planet);
   }
 }
@@ -192,35 +196,54 @@ function onClick(event) {
   }
 }
 
+// Updated spawnNoodles function
 function spawnNoodles(planet) {
   const noodleCount = 20;
+  const worldPosition = new THREE.Vector3();
+  planet.getWorldPosition(worldPosition);
+
   for (let i = 0; i < noodleCount; i++) {
-    const noodleLength = 1 + Math.random() * 2;
-    const noodleGeometry = new THREE.CylinderGeometry(
-      0.05,
-      0.05,
-      noodleLength,
-      8
+    // Generate a random direction vector pointing outward from the planet
+    const theta = Math.random() * 2 * Math.PI; // Random angle around the y-axis
+    const phi = Math.acos(2 * Math.random() - 1); // Random angle from the y-axis
+
+    const direction = new THREE.Vector3(
+      Math.sin(phi) * Math.cos(theta),
+      Math.cos(phi),
+      Math.sin(phi) * Math.sin(theta)
     );
-    const noodleMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700 }); // Golden color for noodles
+
+    // Create a curved path for the noodle
+    const pathPoints = [];
+    const segments = 10; // Number of segments in the noodle
+    const length = 5 + Math.random() * 5; // Length of the noodle
+    const spread = 1.5; // How much the noodle wiggles
+
+    for (let j = 0; j <= segments; j++) {
+      const t = j / segments;
+      const point = new THREE.Vector3().copy(worldPosition);
+      const offset = direction.clone().multiplyScalar(length * t);
+      point.add(offset);
+
+      // Add some randomness to create the wiggly effect
+      point.x += (Math.random() - 0.5) * spread;
+      point.y += (Math.random() - 0.5) * spread;
+      point.z += (Math.random() - 0.5) * spread;
+
+      pathPoints.push(point);
+    }
+
+    const noodleCurve = new THREE.CatmullRomCurve3(pathPoints);
+    const noodleGeometry = new THREE.TubeGeometry(noodleCurve, 64, 0.1, 8, false);
+    const noodleMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700 });
     const noodle = new THREE.Mesh(noodleGeometry, noodleMaterial);
 
-    // Position the noodle at the planet's position
-    const worldPosition = new THREE.Vector3();
-    planet.getWorldPosition(worldPosition);
-    noodle.position.copy(worldPosition);
+    // Set the noodle's initial position
+    noodle.position.set(0, 0, 0); // Since the path already includes world positions
 
-    // Random orientation
-    noodle.rotation.x = Math.random() * Math.PI * 2;
-    noodle.rotation.y = Math.random() * Math.PI * 2;
-    noodle.rotation.z = Math.random() * Math.PI * 2;
-
-    // Assign a random velocity
-    const velocity = new THREE.Vector3(
-      (Math.random() - 0.5) * 2,
-      (Math.random() - 0.5) * 2,
-      (Math.random() - 0.5) * 2
-    );
+    // Assign a velocity in the direction vector
+    const speed = 1; // Adjust the speed as needed
+    const velocity = direction.clone().normalize().multiplyScalar(speed);
 
     // Add custom properties
     noodle.userData = {
@@ -283,10 +306,8 @@ function animate() {
     moon.angle += deltaTime / moon.orbitRadius;
     const planetPos = moon.parentPlanet.position;
 
-    moon.position.x =
-      planetPos.x + moon.orbitRadius * Math.cos(moon.angle);
-    moon.position.z =
-      planetPos.z + moon.orbitRadius * Math.sin(moon.angle);
+    moon.position.x = planetPos.x + moon.orbitRadius * Math.cos(moon.angle);
+    moon.position.z = planetPos.z + moon.orbitRadius * Math.sin(moon.angle);
     moon.position.y = planetPos.y; // Keep moons in the same plane
   });
 
@@ -302,13 +323,9 @@ function animate() {
     }
 
     // Update position based on velocity
-    noodle.position.add(
-      noodle.userData.velocity.clone().multiplyScalar(deltaTime)
-    );
+    noodle.position.add(noodle.userData.velocity.clone().multiplyScalar(deltaTime));
 
-    // Wiggle effect
-    noodle.rotation.x += deltaTime * 10;
-    noodle.rotation.y += deltaTime * 10;
+    // Optional: Add rotation or other effects if desired
   }
 
   controls.update(); // Update controls
