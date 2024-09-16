@@ -22,15 +22,24 @@ scene.add(pointLight);
 // Load textures
 const loader = new THREE.TextureLoader();
 
-// Load meatball texture for planets and moons
-const meatballTexture = loader.load('img/meatballs/2.png');
+// Arrays of image URLs for planets and moons
+const planetImages = [
+  'img/meatballs/2.png',
+  'img/meatballs/3.png',
+];
 
-// Load a different meatball texture for the sun
-const sunTexture = loader.load('img/meatballs/1.jpg');
+const moonImages = [
+  'img/olives/1.png',
+  'img/olives/2.png',
+  'img/olives/3.png',
+  'img/olives/4.png',
+  'img/olives/5.png',
+];
 
-// Helper function to create a meatball
-function createMeatball(radius, texture) {
+// Helper function to create a meatball with a random texture
+function createMeatball(radius, texturePath) {
   const geometry = new THREE.SphereGeometry(radius, 32, 32);
+  const texture = loader.load(texturePath);
   const material = new THREE.MeshBasicMaterial({ map: texture });
   const meatball = new THREE.Mesh(geometry, material);
   meatball.radius = radius;
@@ -45,13 +54,17 @@ const timescale = document.getElementById('timescale');
 let time = 0;
 
 // Create the sun at the center
-const sun = createMeatball(5, sunTexture);
+// Load a different meatball texture for the sun
+const sun = createMeatball(5, 'img/meatballs/1.jpg');
 sun.position.set(0, 0, 0);
 scene.add(sun);
 
 // Add planets to the scene
 for (let i = 0; i < planetCount; i++) {
-  const planet = createMeatball(2, meatballTexture);
+  // Randomly select a planet image
+  const planetImage =
+    planetImages[Math.floor(Math.random() * planetImages.length)];
+  const planet = createMeatball(2, planetImage);
   const orbitRadius = orbitRadii[i];
   planet.orbitRadius = orbitRadius;
   planet.angle = Math.random() * Math.PI * 2;
@@ -73,7 +86,10 @@ for (let i = 0; i < 2; i++) {
   const moonCount = 2; // Number of moons for each planet
 
   for (let j = 0; j < moonCount; j++) {
-    const moon = createMeatball(0.5, meatballTexture);
+    // Randomly select a moon image
+    const moonImage =
+      moonImages[Math.floor(Math.random() * moonImages.length)];
+    const moon = createMeatball(0.5, moonImage);
     moon.orbitRadius = moonOrbitRadius + j * 1; // Slightly different orbit radii for multiple moons
     moon.angle = Math.random() * Math.PI * 2;
     moon.parentPlanet = planet;
@@ -130,7 +146,12 @@ function spawnNoodles(planet) {
   const noodleCount = 20;
   for (let i = 0; i < noodleCount; i++) {
     const noodleLength = 1 + Math.random() * 2;
-    const noodleGeometry = new THREE.CylinderGeometry(0.05, 0.05, noodleLength, 8);
+    const noodleGeometry = new THREE.CylinderGeometry(
+      0.05,
+      0.05,
+      noodleLength,
+      8
+    );
     const noodleMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700 }); // Golden color for noodles
     const noodle = new THREE.Mesh(noodleGeometry, noodleMaterial);
 
@@ -229,7 +250,9 @@ function animate() {
     }
 
     // Update position based on velocity
-    noodle.position.add(noodle.userData.velocity.clone().multiplyScalar(deltaTime));
+    noodle.position.add(
+      noodle.userData.velocity.clone().multiplyScalar(deltaTime)
+    );
 
     // Wiggle effect
     noodle.rotation.x += deltaTime * 10;
