@@ -234,7 +234,13 @@ function spawnNoodles(planet) {
     }
 
     const noodleCurve = new THREE.CatmullRomCurve3(pathPoints);
-    const noodleGeometry = new THREE.TubeGeometry(noodleCurve, 64, 0.1, 8, false);
+    const noodleGeometry = new THREE.TubeGeometry(
+      noodleCurve,
+      64,
+      0.1,
+      8,
+      false
+    );
     const noodleMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700 });
     const noodle = new THREE.Mesh(noodleGeometry, noodleMaterial);
 
@@ -255,6 +261,53 @@ function spawnNoodles(planet) {
     scene.add(noodle);
   }
 }
+
+// **Add orbiting text meshes**
+const textMeshes = [];
+
+// Load Font
+const fontLoader = new THREE.FontLoader();
+fontLoader.load(
+  'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+  function (font) {
+    // Messages
+    const messages = [
+      { text: 'PLENTY OF SPAGHETTI!', size: 20, radius: 250, speed: 0.02 },
+      { text: 'PLEASE.NYC', size: 10, radius: 300, speed: -0.015 },
+    ];
+
+    messages.forEach((message, index) => {
+      const textGeometry = new THREE.TextGeometry(message.text, {
+        font: font,
+        size: message.size,
+        height: 1,
+        curveSegments: 12,
+      });
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+      const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+      // Initial position
+      const angle = Math.random() * Math.PI * 2;
+      textMesh.position.x = Math.cos(angle) * message.radius;
+      textMesh.position.z = Math.sin(angle) * message.radius;
+      textMesh.position.y = 0;
+
+      // Store userData for animation
+      textMesh.userData = {
+        angle: angle,
+        radius: message.radius,
+        speed: message.speed,
+      };
+
+      // Rotate the text to face the center
+      textMesh.lookAt(new THREE.Vector3(0, 0, 0));
+
+      // Add to scene and array
+      scene.add(textMesh);
+      textMeshes.push(textMesh);
+    });
+  }
+);
 
 // Update function
 function animate() {
@@ -323,10 +376,25 @@ function animate() {
     }
 
     // Update position based on velocity
-    noodle.position.add(noodle.userData.velocity.clone().multiplyScalar(deltaTime));
-
-    // Optional: Add rotation or other effects if desired
+    noodle.position.add(
+      noodle.userData.velocity.clone().multiplyScalar(deltaTime)
+    );
   }
+
+  // **Update text meshes**
+  textMeshes.forEach((textMesh) => {
+    const speed = textMesh.userData.speed;
+    const radius = textMesh.userData.radius;
+    textMesh.userData.angle += speed * deltaTime;
+
+    const angle = textMesh.userData.angle;
+
+    textMesh.position.x = Math.cos(angle) * radius;
+    textMesh.position.z = Math.sin(angle) * radius;
+
+    // Rotate the text to face the center
+    textMesh.lookAt(new THREE.Vector3(0, 0, 0));
+  });
 
   controls.update(); // Update controls
   renderer.render(scene, camera);
