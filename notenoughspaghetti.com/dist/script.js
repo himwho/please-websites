@@ -221,80 +221,42 @@ function createMeatball() {
 }
 
 function createFork() {
-  // Dimensions in pixels
-  const forkWidth = 20;
-  const forkHeight = 80;
+  const loader = new THREE.GLTFLoader();
+  loader.load(
+    './fork.glb', // Path to your fork model
+    function (gltf) {
+      forkMesh = gltf.scene;
+      forkMesh.scale.set(50, 50, 50); // Adjust the scale as needed
+      forkMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+      scene.add(forkMesh);
 
-  // Starting position
-  const forkX = window.innerWidth / 2;
-  const forkY = window.innerHeight / 2;
+      // Optional: Adjust material to make it metallic
+      forkMesh.traverse((child) => {
+        if (child.isMesh) {
+          child.material = new THREE.MeshPhysicalMaterial({
+            color: 0xb0b0b0,
+            metalness: 1,
+            roughness: 0.2,
+            reflectivity: 0.8,
+          });
+        }
+      });
 
-  // Create a group to hold the fork parts
-  forkMesh = new THREE.Group();
-
-  // Handle
-  const handleGeometry = new THREE.BoxGeometry(forkWidth/2, forkHeight, 5);
-  const forkMaterial = new THREE.MeshBasicMaterial({ color: 0x808080 });
-  const handleMesh = new THREE.Mesh(handleGeometry, forkMaterial);
-  handleMesh.position.set(0, 0, 0);
-  forkMesh.add(handleMesh);
-
-  // Prongs
-  const prongWidth = 3;
-  const prongHeight = 30;
-  const prongSpacing = 6;
-  const numProngs = 4;
-  const prongStartY = -forkHeight / 2 - prongHeight / 2;
-
-  for (let i = 0; i < numProngs; i++) {
-    const prongGeometry = new THREE.BoxGeometry(prongWidth, prongHeight, 5);
-    const prongMesh = new THREE.Mesh(prongGeometry, forkMaterial);
-    prongMesh.position.set(
-      -((numProngs - 1) * prongSpacing) / 2 + i * prongSpacing,
-      prongStartY,
-      0
-    );
-    forkMesh.add(prongMesh);
-  }
-
-  // Position the fork
-  forkMesh.position.set(forkX, forkY, 0);
-  scene.add(forkMesh);
-
-  // Matter.js fork
-  // For the physics simulation, we can create a compound body
-
-  // Handle body
-  const handleBody = Bodies.rectangle(
-    forkX,
-    forkY,
-    forkWidth,
-    forkHeight,
-    { isStatic: true }
+      // Create a simplified Matter.js body for physics
+      forkBody = Bodies.rectangle(
+        forkMesh.position.x,
+        forkMesh.position.y,
+        20, // Approximate width
+        150, // Approximate height
+        { isStatic: true }
+      );
+      World.add(world, forkBody);
+    },
+    undefined,
+    function (error) {
+      console.error('An error occurred while loading the fork model:', error);
+    }
   );
-
-  // Prong bodies
-  const prongBodies = [];
-  for (let i = 0; i < numProngs; i++) {
-    const prongX =
-      forkX - ((numProngs - 1) * prongSpacing) / 2 + i * prongSpacing;
-    const prongY = forkY - forkHeight / 2 - prongHeight / 2;
-    const prongBody = Bodies.rectangle(
-      prongX,
-      prongY,
-      prongWidth,
-      prongHeight,
-      { isStatic: true }
-    );
-    prongBodies.push(prongBody);
-  }
-
-  // Create a compound body for the fork
-  forkBody = Body.create({
-    parts: [handleBody, ...prongBodies],
-    isStatic: true
-  });
-  World.add(world, forkBody);
 }
 
 function animate() {
@@ -370,8 +332,8 @@ function updateObjectsFromPhysics() {
   }
 
   // Update fork position in Matter.js
-  Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
-  Body.setAngle(forkBody, forkMesh.rotation.z);
+  // Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
+  // Body.setAngle(forkBody, forkMesh.rotation.z);
 }
 
 function onMouseMove(event) {

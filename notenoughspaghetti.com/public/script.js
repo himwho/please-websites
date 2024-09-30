@@ -226,8 +226,19 @@ function createFork() {
     './fork.glb', // Path to your fork model
     function (gltf) {
       forkMesh = gltf.scene;
-      forkMesh.scale.set(0.1, 0.1, 0.1); // Adjust the scale as needed
-      forkMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+
+      // Adjust the fork's scale
+      forkMesh.scale.set(4, 4, 4); // Adjust the scale as needed
+
+      // Center the fork's geometry
+      const box = new THREE.Box3().setFromObject(forkMesh);
+      const center = box.getCenter(new THREE.Vector3());
+      forkMesh.position.sub(center); // Center the geometry
+
+      // Set initial position
+      const initialX = window.innerWidth / 2;
+      const initialY = window.innerHeight / 2;
+      forkMesh.position.set(initialX, initialY, 0);
       scene.add(forkMesh);
 
       // Optional: Adjust material to make it metallic
@@ -242,12 +253,14 @@ function createFork() {
         }
       });
 
+      forkMesh.rotation.z = THREE.MathUtils.degToRad(115); // Rotate degrees
+
       // Create a simplified Matter.js body for physics
       forkBody = Bodies.rectangle(
-        forkMesh.position.x,
-        forkMesh.position.y,
-        20, // Approximate width
-        150, // Approximate height
+        initialX,
+        initialY,
+        10, // Approximate width; adjust as needed
+        80, // Approximate height; adjust as needed
         { isStatic: true }
       );
       World.add(world, forkBody);
@@ -332,9 +345,14 @@ function updateObjectsFromPhysics() {
   }
 
   // Update fork position in Matter.js
-  // Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
-  // Body.setAngle(forkBody, forkMesh.rotation.z);
+  if (forkMesh && forkBody) {
+    Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
+    Body.setAngle(forkBody, forkMesh.rotation.z);
+  }
 }
+
+let prevMouseX = window.innerWidth / 2;
+let prevMouseY = window.innerHeight / 2;
 
 function onMouseMove(event) {
   if (!forkMesh) return; // Ensure forkMesh is loaded
@@ -342,12 +360,27 @@ function onMouseMove(event) {
   const mouseX = event.clientX;
   const mouseY = event.clientY;
 
+  // Calculate the change in mouse position
+  const deltaX = mouseX - prevMouseX;
+  const deltaY = mouseY - prevMouseY;
+
+  // Calculate the angle of movement
+  //const angle = Math.atan2(deltaY, deltaX);
+
   forkMesh.position.set(mouseX, mouseY, 0);
 
-  // Update fork position in Matter.js
+  // Set fork rotation
+  //forkMesh.rotation.z = angle;
+
+  // Update fork position and rotation in Matter.js
   if (forkBody) {
     Body.setPosition(forkBody, { x: mouseX, y: mouseY });
+    //Body.setAngle(forkBody, angle);
   }
+
+  // Update previous mouse position
+  prevMouseX = mouseX;
+  prevMouseY = mouseY;
 }
 
 function onWindowResize() {
