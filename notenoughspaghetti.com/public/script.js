@@ -3,6 +3,7 @@ let scene, camera, renderer;
 let forkMesh;
 let plateMesh;
 let textMesh;
+let website_details_textMesh;
 let mouseX = 0;
 let mouseY = 0;
 
@@ -66,7 +67,7 @@ function initThree() {
     function (font) {
       const textGeometry = new THREE.TextGeometry('WWW.PLEASE.NYC', {
         font: font,
-        size: 40,
+        size: 30,
         height: 5,
         curveSegments: 12,
         bevelEnabled: false,
@@ -78,6 +79,8 @@ function initThree() {
       // Position the text in the background and center it
       textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
       textMesh.geometry.center();
+      textMesh.rotation.y = THREE.Math.degToRad(180);
+      textMesh.rotation.z = THREE.Math.degToRad(180);
       scene.add(textMesh);
 
       const website_details_textGeometry = new THREE.TextGeometry('THERE IS NOT ENOUGH SPAGHETTI!!', {
@@ -94,6 +97,8 @@ function initThree() {
       // Position the text in the background and center it
       website_details_textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2 - 100, 0);
       website_details_textMesh.geometry.center();
+      website_details_textMesh.rotation.y = THREE.Math.degToRad(180);
+      website_details_textMesh.rotation.z = THREE.Math.degToRad(180);
       scene.add(website_details_textMesh);
     }
   );
@@ -302,8 +307,8 @@ function createFork() {
       forkBody = Bodies.rectangle(
         initialX,
         initialY,
-        10, // Approximate width; adjust as needed
-        80, // Approximate height; adjust as needed
+        10,
+        80,
         { isStatic: true }
       );
       World.add(world, forkBody);
@@ -332,10 +337,10 @@ function render() {
 
   // Rotate the textMesh based on mouse movement
   if (textMesh) {
-    textMesh.rotation.x += (mouseY * 0.0001 - textMesh.rotation.x) * 0.1;
-    textMesh.rotation.y += (mouseX * 0.0001 - textMesh.rotation.y) * 0.1;
-    website_details_textMesh.rotation.x += (mouseY * 0.0001 - website_details_textMesh.rotation.x) * 0.05;
-    website_details_textMesh.rotation.y += (mouseX * 0.0001 - website_details_textMesh.rotation.y) * 0.05;
+    textMesh.rotation.x += (mouseY * 0.0001 - THREE.Math.degToRad(1)) * 0.1;
+    textMesh.rotation.y += (mouseX * 0.0001 - THREE.Math.degToRad(1)) * 0.1;
+    website_details_textMesh.rotation.x += (mouseY * 0.0001) * 0.05;
+    website_details_textMesh.rotation.y += (mouseX * 0.0001) * 0.05;
   }
 
   // Render the scene
@@ -435,12 +440,12 @@ function onMouseMove(event) {
 }
 
 function handleOrientation(event) {
-  const beta = event.beta || 0; // [-180,180]
-  const gamma = event.gamma || 0; // [-90,90]
+  const beta = event.beta || 180; // [-180,180]
+  const gamma = event.gamma || 90; // [-90,90]
 
   if (textMesh) {
-    textMesh.rotation.x = THREE.Math.degToRad(beta) * 0.05;
-    textMesh.rotation.y = THREE.Math.degToRad(gamma) * 0.05;
+    //textMesh.rotation.z = THREE.Math.degToRad(beta) * 0.15;
+    //textMesh.rotation.x = THREE.Math.degToRad(gamma) * 0.05;
   }
 }
 
@@ -452,11 +457,11 @@ function onWindowResize() {
   renderer.setSize(window.innerWidth, window.innerHeight);
 
   // Update plate position
-  if (plateMesh && plateBody) {
+  if (plateMesh) {
     const plateX = window.innerWidth / 2;
     const plateY = window.innerHeight - 50;
 
-    plateMesh.position.set(plateX, plateY, 0);
+    plateMesh.position.set(plateX, plateY, -500);
 
     // Update plate body position in Matter.js
     const translation = {
@@ -468,7 +473,8 @@ function onWindowResize() {
 
   // Update text position
   if (textMesh) {
-    textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, -500);
+    textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+    website_details_textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2 - 100, 0);
   }
 }
 
