@@ -1,8 +1,8 @@
 {
   "name": "plentyofspaghetti.com",
   "version": "1.0.0",
-  "description": "THREE.JS",
-  "main": "index.js",
+  "description": "A SOLAR SYSTEM OF SPAGHETTI MIGHT BE PLENTY!",
+  "main": "index.html",
   "scripts": {
     "build": "rm -rf dist && mkdir dist && cp -r public/* dist/",
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -273,7 +273,7 @@ fontLoader.load(
     // Messages
     const messages = [
       { text: 'PLENTY OF SPAGHETTI!', size: 20, radius: 250, speed: 0.02 },
-      { text: 'PLEASE.NYC', size: 10, radius: 300, speed: -0.015 },
+      { text: 'WWW.PLEASE.NYC', size: 10, radius: 300, speed: -0.015 },
     ];
 
     messages.forEach((message, index) => {

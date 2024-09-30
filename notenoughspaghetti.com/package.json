@@ -7,15 +7,13 @@
     "lib": "lib"
   },
   "scripts": {
-    "start": "browser-sync start --server --files '*'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && mkdir dist && cp -r public/* dist/",
+    "clean": "rm -rf node_modules"
   },
   "author": "please",
   "license": "ISC",
   "dependencies": {
-    "matter-js": "^0.18.0"
-  },
-  "devDependencies": {
-    "browser-sync": "^2.26.14"
+    "express": "^4.21.0",
+    "three": "^0.156.1"
   }
 }
