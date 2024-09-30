@@ -1,6 +1,11 @@
 // Three.js variables
 let scene, camera, renderer;
 let forkMesh;
+let plateMesh;
+let textMesh;
+let website_details_textMesh;
+let mouseX = 0;
+let mouseY = 0;
 
 // Matter.js variables
 const { Engine, World, Bodies, Body, Composite, Constraint } = Matter;
@@ -54,6 +59,49 @@ function initThree() {
   // Lighting
   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
+
+  // Load the font and create the text
+  const loader = new THREE.FontLoader();
+  loader.load(
+    'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+    function (font) {
+      const textGeometry = new THREE.TextGeometry('WWW.PLEASE.NYC', {
+        font: font,
+        size: 30,
+        height: 5,
+        curveSegments: 12,
+        bevelEnabled: false,
+      });
+
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x404040 });
+      textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+      // Position the text in the background and center it
+      textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+      textMesh.geometry.center();
+      textMesh.rotation.y = THREE.Math.degToRad(180);
+      textMesh.rotation.z = THREE.Math.degToRad(180);
+      scene.add(textMesh);
+
+      const website_details_textGeometry = new THREE.TextGeometry('THERE IS NOT ENOUGH SPAGHETTI!!', {
+        font: font,
+        size: 40,
+        height: 10,
+        curveSegments: 12,
+        bevelEnabled: false,
+      });
+
+      const website_details_textMaterial = new THREE.MeshBasicMaterial({ color: 0x404040 });
+      website_details_textMesh = new THREE.Mesh(website_details_textGeometry, website_details_textMaterial);
+
+      // Position the text in the background and center it
+      website_details_textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2 - 100, 0);
+      website_details_textMesh.geometry.center();
+      website_details_textMesh.rotation.y = THREE.Math.degToRad(180);
+      website_details_textMesh.rotation.z = THREE.Math.degToRad(180);
+      scene.add(website_details_textMesh);
+    }
+  );
 
   // Handle window resize
   window.addEventListener('resize', onWindowResize, false);
@@ -226,8 +274,19 @@ function createFork() {
     './fork.glb', // Path to your fork model
     function (gltf) {
       forkMesh = gltf.scene;
-      forkMesh.scale.set(50, 50, 50); // Adjust the scale as needed
-      forkMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+
+      // Adjust the fork's scale
+      forkMesh.scale.set(4, 4, 4); // Adjust the scale as needed
+
+      // Center the fork's geometry
+      const box = new THREE.Box3().setFromObject(forkMesh);
+      const center = box.getCenter(new THREE.Vector3());
+      forkMesh.position.sub(center); // Center the geometry
+
+      // Set initial position
+      const initialX = window.innerWidth / 2;
+      const initialY = window.innerHeight / 2;
+      forkMesh.position.set(initialX, initialY, 1);
       scene.add(forkMesh);
 
       // Optional: Adjust material to make it metallic
@@ -242,12 +301,14 @@ function createFork() {
         }
       });
 
+      forkMesh.rotation.z = THREE.MathUtils.degToRad(115); // Rotate degrees
+
       // Create a simplified Matter.js body for physics
       forkBody = Bodies.rectangle(
-        forkMesh.position.x,
-        forkMesh.position.y,
-        20, // Approximate width
-        150, // Approximate height
+        initialX,
+        initialY,
+        10,
+        80,
         { isStatic: true }
       );
       World.add(world, forkBody);
@@ -273,6 +334,14 @@ function render() {
 
   // Update positions of Three.js objects based on Matter.js bodies
   updateObjectsFromPhysics();
+
+  // Rotate the textMesh based on mouse movement
+  if (textMesh) {
+    textMesh.rotation.x += (mouseY * 0.0001 - THREE.Math.degToRad(1)) * 0.1;
+    textMesh.rotation.y += (mouseX * 0.0001 - THREE.Math.degToRad(1)) * 0.1;
+    website_details_textMesh.rotation.x += (mouseY * 0.0001) * 0.05;
+    website_details_textMesh.rotation.y += (mouseX * 0.0001) * 0.05;
+  }
 
   // Render the scene
   renderer.render(scene, camera);
@@ -332,32 +401,52 @@ function updateObjectsFromPhysics() {
   }
 
   // Update fork position in Matter.js
-  // Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
-  // Body.setAngle(forkBody, forkMesh.rotation.z);
+  if (forkMesh && forkBody) {
+    Body.setPosition(forkBody, { x: forkMesh.position.x, y: forkMesh.position.y });
+    Body.setAngle(forkBody, forkMesh.rotation.z);
+  }
 }
 
+let prevMouseX = window.innerWidth / 2;
+let prevMouseY = window.innerHeight / 2;
+
 function onMouseMove(event) {
-  const mouseX = event.clientX;
-  const mouseY = event.clientY;
+  if (!forkMesh) return; // Ensure forkMesh is loaded
+
+  mouseX = event.clientX;
+  mouseY = event.clientY;
+
+  // Calculate the change in mouse position
+  const deltaX = mouseX - prevMouseX;
+  const deltaY = mouseY - prevMouseY;
+
+  // Calculate the angle of movement
+  //const angle = Math.atan2(deltaY, deltaX);
 
   forkMesh.position.set(mouseX, mouseY, 0);
 
-  // Update fork position in Matter.js
-  const forkOffsetY = forkMesh.position.y;
-  const forkParts = forkBody.parts;
+  // Set fork rotation
+  //forkMesh.rotation.z = angle;
 
-  // Update positions of each part of the fork
-  for (let i = 0; i < forkParts.length; i++) {
-    const part = forkParts[i];
-    const relativePosition = {
-      x: forkMesh.position.x + part.position.x - forkBody.position.x,
-      y: forkMesh.position.y + part.position.y - forkBody.position.y
-    };
-    Body.setPosition(part, relativePosition);
+  // Update fork position and rotation in Matter.js
+  if (forkBody) {
+    Body.setPosition(forkBody, { x: mouseX, y: mouseY });
+    //Body.setAngle(forkBody, angle);
   }
 
-  // Update the fork body position
-  Body.setPosition(forkBody, { x: mouseX, y: mouseY });
+  // Update previous mouse position
+  prevMouseX = mouseX;
+  prevMouseY = mouseY;
+}
+
+function handleOrientation(event) {
+  const beta = event.beta || 180; // [-180,180]
+  const gamma = event.gamma || 90; // [-90,90]
+
+  if (textMesh) {
+    //textMesh.rotation.z = THREE.Math.degToRad(beta) * 0.15;
+    //textMesh.rotation.x = THREE.Math.degToRad(gamma) * 0.05;
+  }
 }
 
 function onWindowResize() {
@@ -366,7 +455,29 @@ function onWindowResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Update plate position
+  if (plateMesh) {
+    const plateX = window.innerWidth / 2;
+    const plateY = window.innerHeight - 50;
+
+    plateMesh.position.set(plateX, plateY, -500);
+
+    // Update plate body position in Matter.js
+    const translation = {
+      x: plateX - plateBody.position.x,
+      y: plateY - plateBody.position.y,
+    };
+    Matter.Body.translate(plateBody, translation);
+  }
+
+  // Update text position
+  if (textMesh) {
+    textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+    website_details_textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2 - 100, 0);
+  }
 }
 
 // Mouse move event
 document.addEventListener('mousemove', onMouseMove, false);
+window.addEventListener('deviceorientation', handleOrientation, true);
