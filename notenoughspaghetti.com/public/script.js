@@ -1,6 +1,10 @@
 // Three.js variables
 let scene, camera, renderer;
 let forkMesh;
+let plateMesh;
+let textMesh;
+let mouseX = 0;
+let mouseY = 0;
 
 // Matter.js variables
 const { Engine, World, Bodies, Body, Composite, Constraint } = Matter;
@@ -54,6 +58,45 @@ function initThree() {
   // Lighting
   const ambientLight = new THREE.AmbientLight(0xffffff, 1);
   scene.add(ambientLight);
+
+  // Load the font and create the text
+  const loader = new THREE.FontLoader();
+  loader.load(
+    'https://threejs.org/examples/fonts/helvetiker_regular.typeface.json',
+    function (font) {
+      const textGeometry = new THREE.TextGeometry('WWW.PLEASE.NYC', {
+        font: font,
+        size: 40,
+        height: 5,
+        curveSegments: 12,
+        bevelEnabled: false,
+      });
+
+      const textMaterial = new THREE.MeshBasicMaterial({ color: 0x404040 });
+      textMesh = new THREE.Mesh(textGeometry, textMaterial);
+
+      // Position the text in the background and center it
+      textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, 0);
+      textMesh.geometry.center();
+      scene.add(textMesh);
+
+      const website_details_textGeometry = new THREE.TextGeometry('THERE IS NOT ENOUGH SPAGHETTI!!', {
+        font: font,
+        size: 40,
+        height: 10,
+        curveSegments: 12,
+        bevelEnabled: false,
+      });
+
+      const website_details_textMaterial = new THREE.MeshBasicMaterial({ color: 0x404040 });
+      website_details_textMesh = new THREE.Mesh(website_details_textGeometry, website_details_textMaterial);
+
+      // Position the text in the background and center it
+      website_details_textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2 - 100, 0);
+      website_details_textMesh.geometry.center();
+      scene.add(website_details_textMesh);
+    }
+  );
 
   // Handle window resize
   window.addEventListener('resize', onWindowResize, false);
@@ -238,7 +281,7 @@ function createFork() {
       // Set initial position
       const initialX = window.innerWidth / 2;
       const initialY = window.innerHeight / 2;
-      forkMesh.position.set(initialX, initialY, 0);
+      forkMesh.position.set(initialX, initialY, 1);
       scene.add(forkMesh);
 
       // Optional: Adjust material to make it metallic
@@ -286,6 +329,14 @@ function render() {
 
   // Update positions of Three.js objects based on Matter.js bodies
   updateObjectsFromPhysics();
+
+  // Rotate the textMesh based on mouse movement
+  if (textMesh) {
+    textMesh.rotation.x += (mouseY * 0.0001 - textMesh.rotation.x) * 0.1;
+    textMesh.rotation.y += (mouseX * 0.0001 - textMesh.rotation.y) * 0.1;
+    website_details_textMesh.rotation.x += (mouseY * 0.0001 - website_details_textMesh.rotation.x) * 0.05;
+    website_details_textMesh.rotation.y += (mouseX * 0.0001 - website_details_textMesh.rotation.y) * 0.05;
+  }
 
   // Render the scene
   renderer.render(scene, camera);
@@ -357,8 +408,8 @@ let prevMouseY = window.innerHeight / 2;
 function onMouseMove(event) {
   if (!forkMesh) return; // Ensure forkMesh is loaded
 
-  const mouseX = event.clientX;
-  const mouseY = event.clientY;
+  mouseX = event.clientX;
+  mouseY = event.clientY;
 
   // Calculate the change in mouse position
   const deltaX = mouseX - prevMouseX;
@@ -383,13 +434,44 @@ function onMouseMove(event) {
   prevMouseY = mouseY;
 }
 
+function handleOrientation(event) {
+  const beta = event.beta || 0; // [-180,180]
+  const gamma = event.gamma || 0; // [-90,90]
+
+  if (textMesh) {
+    textMesh.rotation.x = THREE.Math.degToRad(beta) * 0.05;
+    textMesh.rotation.y = THREE.Math.degToRad(gamma) * 0.05;
+  }
+}
+
 function onWindowResize() {
   camera.right = window.innerWidth;
   camera.bottom = window.innerHeight;
   camera.updateProjectionMatrix();
 
   renderer.setSize(window.innerWidth, window.innerHeight);
+
+  // Update plate position
+  if (plateMesh && plateBody) {
+    const plateX = window.innerWidth / 2;
+    const plateY = window.innerHeight - 50;
+
+    plateMesh.position.set(plateX, plateY, 0);
+
+    // Update plate body position in Matter.js
+    const translation = {
+      x: plateX - plateBody.position.x,
+      y: plateY - plateBody.position.y,
+    };
+    Matter.Body.translate(plateBody, translation);
+  }
+
+  // Update text position
+  if (textMesh) {
+    textMesh.position.set(window.innerWidth / 2, window.innerHeight / 2, -500);
+  }
 }
 
 // Mouse move event
 document.addEventListener('mousemove', onMouseMove, false);
+window.addEventListener('deviceorientation', handleOrientation, true);
