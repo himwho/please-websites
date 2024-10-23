@@ -69,6 +69,9 @@
         <div class="paper productCard" data-name="notenoughspaghetti" data-website="notenoughspaghetti.com" data-website-url="https://notenoughspaghetti.com">
             <img src="img/notenoughspaghetti.png">
         </div>
+        <div class="sign" data-name="city-sign-1" data-email-header='I would like to request a please branded "Do Not Honk We Work Night Shifts" sign!' data-email-url="less_honking@please.nyc">
+            <img src="img/city-sign-1.png">
+        </div>
         <div class="paper productCard" data-name="postit" data-website="tomsachsophone.com" data-website-url="https://tomsachsophone.com">
             <img src="img/postit.png">
         </div>
@@ -83,6 +86,31 @@
             const modalOuter = document.querySelector('.modal-outer');
             const modalInner = document.querySelector('.modal-inner');
             productCardButtons.forEach(button => button.addEventListener('click', handleproductCardButtonClick))
+
+            const signButtons = document.querySelectorAll('.sign');
+            signButtons.forEach(button => button.addEventListener('click', handleSignButtonClick))
+
+            function handleSignButtonClick(event) {
+                const button = event.currentTarget; // Get the clicked button
+                const sign = button.closest('.sign'); // Find the closest parent element with the 'sign' class
+
+                // Ensure 'sign' exists
+                if (!sign) {
+                    console.error("Sign element not found.");
+                    return;
+                }
+
+                // Get the email URL and body from the data attributes
+                const emailTo = sign.dataset.emailUrl;
+                const emailSubject = "PLEASE NYC SIGN REQUEST";
+                const emailBody = sign.dataset.emailHeader;
+
+                // Construct the mailto link
+                const mailtoLink = `mailto:${emailTo}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+                // Open the user's email client with the constructed mailto link
+                location.href = mailtoLink;
+            }
 
             function handleproductCardButtonClick(event) {
                 const button = event.currentTarget;
