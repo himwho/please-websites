@@ -84,6 +84,7 @@
         </div>
 
         <script>
+            const postItElements = document.querySelectorAll('.paper, .sign');
             const productCardButtons = document.querySelectorAll('.productCard');
             const modalOuter = document.querySelector('.modal-outer');
             const modalInner = document.querySelector('.modal-inner');
@@ -196,70 +197,69 @@
             function randomizePostIts() {
                 var winWidth = window.innerWidth;
                 var winHeight = window.innerHeight;
-                var centerPointM = { x: winWidth/2, y: winHeight/2 };
+                var centerPointM = { x: winWidth / 2, y: winHeight / 2 };
                 // Center thresholds for blocking random points
-                var centerPointL = { x: winWidth/2-(175), y: winHeight/2 };
-                var centerPointR = { x:  winWidth/2+(175), y: winHeight/2 };
+                var centerPointL = { x: winWidth / 2 - 175, y: winHeight / 2 };
+                var centerPointR = { x: winWidth / 2 + 175, y: winHeight / 2 };
 
                 var postItArray = []; // storing array
                 postItArray.push(centerPointL, centerPointM, centerPointR); // push back center points
 
-                for ( var i=0; i < productCardButtons.length; i++ ) {
-                    var thisDiv = productCardButtons[i];
+                for (var i = 0; i < postItElements.length; i++) {
+                    var thisDiv = postItElements[i];
                     var postItOffsetDistance = thisDiv.offsetWidth; // the minimum amount for a conflict
                     var newPoint; // used to track new testing point
                     var foundConflict = true;
                     var emergencyConflicts = 0; // used to stop tests when too many happen
 
                     while (foundConflict) {
-                        // make an array of points too close to new postit
-                        newPoint = { x: getRandomNumber(0, winWidth-postItOffsetDistance), y: getRandomNumber(0, winHeight-postItOffsetDistance) };
+                        // Generate a random point
+                        newPoint = {
+                            x: getRandomNumber(0, winWidth - postItOffsetDistance),
+                            y: getRandomNumber(0, winHeight - postItOffsetDistance)
+                        };
 
                         var conflicts = 0;
 
-                        for ( var j=0; j < postItArray.length; j++) {
+                        for (var j = 0; j < postItArray.length; j++) {
                             var currentDist = distance(newPoint, postItArray[j]);
-                            //console.log("Testing:", j, "Distance:", currentDist, "Out of:", postItArray.length);
                             if (currentDist < postItOffsetDistance) {
-                                // too close!
-                                //console.log("Conflict! Against:", j+": Distance:", currentDist);
+                                // Too close to another element
                                 conflicts++;
                             }
                         }
-                        // use this to stop tests when we are stuck in a testing loop
+
                         emergencyConflicts++;
                         if (emergencyConflicts > 50) {
-                            console.log("Breaking out of while loop due to too many failed test attempts!");
+                            console.log("Breaking out due to too many conflicts!");
                             foundConflict = false;
                         }
-                        // break out because successful or restart a new test
-                        if (conflicts == 0) {
+
+                        if (conflicts === 0) {
                             foundConflict = false;
-                            console.log("New Point: X="+newPoint.x+", Y="+newPoint.y);
+                            console.log("New Point: X=" + newPoint.x + ", Y=" + newPoint.y);
                         } else {
-                            console.log("Restarting with new point because of "+conflicts+" conflicts!");
+                            console.log("Conflicts detected, trying new point.");
                         }
                     }
 
-                    // Store postit value
-                    //console.log("Shifted Values: ", newPoint.x, newPoint.y);
+                    // Store the position to prevent overlap
                     postItArray.push(newPoint);
 
-                    // Update postit position on screen
-                    thisDiv.style.left = newPoint.x +"px";
-                    thisDiv.style.top = newPoint.y +"px";
+                    // Update element position
+                    thisDiv.style.left = newPoint.x + "px";
+                    thisDiv.style.top = newPoint.y + "px";
                 }
             }
 
             window.addEventListener("load", function() {
                 randomizePostIts();
             });
-            window.addEventListener("resize", onresize);
-            var onresize = function(e) {
-                //width = e.target.outerWidth;
-                //height = e.target.outerHeight;
+
+            window.addEventListener("resize", function(e) {
                 randomizePostIts();
-            }
+            });
+
         </script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/jquery-{{JQUERY_VERSION}}.min.js"><\/script>')</script>
