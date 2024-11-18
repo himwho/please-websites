@@ -50,10 +50,11 @@ function spawnRandomImage() {
     let height = img.naturalHeight;
     let aspectRatio = width / height;
     
-    // Limit width to 480px (accounting for padding)
+    // Limit width to 45vw (accounting for padding)
     const padding = 16; // 8px padding on each side
-    if (width > (480 - padding * 2)) {
-      width = 480 - padding * 2;
+    const maxWidth = window.innerWidth * 0.45 - padding * 2; // 45vw converted to pixels
+    if (width > maxWidth) {
+      width = maxWidth;
       height = width / aspectRatio;
     }
     
@@ -68,34 +69,50 @@ function spawnRandomImage() {
     popup.style.top = `${Math.max(0, y)}px`;
   };
   
-  // Improved drag handling
+  // Add both mouse and touch events for dragging
   let isDragging = false;
   let currentX;
   let currentY;
   let initialX;
   let initialY;
   
-  titleBar.addEventListener('mousedown', (e) => {
+  function startDrag(e) {
     isDragging = true;
-    initialX = e.clientX - popup.offsetLeft;
-    initialY = e.clientY - popup.offsetTop;
-    
-    popup.style.zIndex = 1000; // Bring to front when dragging
-  });
+    initialX = (e.clientX || e.touches[0].clientX) - popup.offsetLeft;
+    initialY = (e.clientY || e.touches[0].clientY) - popup.offsetTop;
+    popup.style.zIndex = 1000;
+  }
   
-  document.addEventListener('mousemove', (e) => {
+  function drag(e) {
     if (isDragging) {
       e.preventDefault();
-      currentX = e.clientX - initialX;
-      currentY = e.clientY - initialY;
-      
+      currentX = (e.clientX || e.touches[0].clientX) - initialX;
+      currentY = (e.clientY || e.touches[0].clientY) - initialY;
       popup.style.left = `${currentX}px`;
       popup.style.top = `${currentY}px`;
     }
-  });
+  }
   
-  document.addEventListener('mouseup', () => {
+  function stopDrag() {
     isDragging = false;
+  }
+  
+  // Mouse events
+  titleBar.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', stopDrag);
+  
+  // Touch events
+  titleBar.addEventListener('touchstart', startDrag);
+  document.addEventListener('touchmove', drag);
+  document.addEventListener('touchend', stopDrag);
+  
+  // Add touch support for close button
+  closeButton.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    popup.remove();
+    decreaseSpawnDelay();
   });
   
   // Assemble the popup
@@ -109,15 +126,59 @@ function spawnRandomImage() {
   container.appendChild(popup);
 }
 
-// Update the click handler for explosions
-document.body.addEventListener('click', (e) => {
-  // Only spawn explosion if we're not clicking on a window, taskbar, or start menu
+// Update click/touch handler for explosions
+function handleInteraction(e) {
+  // Get coordinates from either mouse or touch event
+  const x = e.clientX || e.touches[0].clientX;
+  const y = e.clientY || e.touches[0].clientY;
+  
+  // Only spawn explosion if we're not interacting with a window, taskbar, or start menu
   if (!e.target.closest('.window') && 
       !e.target.closest('.taskbar') && 
       !e.target.closest('.start-menu')) {
-    spawnExplosion(e.clientX, e.clientY);
+    spawnExplosion(x, y);
     decreaseSpawnDelay();
   }
+}
+
+document.body.addEventListener('click', handleInteraction);
+document.body.addEventListener('touchstart', handleInteraction);
+
+// Update start button handlers for touch
+const startButton = document.querySelector('.start-button');
+const startMenu = document.querySelector('.start-menu');
+
+function toggleStartMenu(e) {
+  e.preventDefault();
+  e.stopPropagation();
+  startMenu.style.display = startMenu.style.display === 'none' ? 'block' : 'none';
+}
+
+startButton.addEventListener('click', toggleStartMenu);
+startButton.addEventListener('touchend', toggleStartMenu);
+
+// Close start menu when clicking/touching elsewhere
+function closeStartMenu(e) {
+  if (!startMenu.contains(e.target) && !startButton.contains(e.target)) {
+    startMenu.style.display = 'none';
+  }
+}
+
+document.addEventListener('click', closeStartMenu);
+document.addEventListener('touchend', closeStartMenu);
+
+// Add touch support for menu items
+document.querySelectorAll('.menu-item').forEach(item => {
+  const handleMenuClick = () => {
+    startMenu.style.display = 'none';
+    spawnRandomImage();
+  };
+  
+  item.addEventListener('click', handleMenuClick);
+  item.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    handleMenuClick();
+  });
 });
 
 // Display random text for 5 seconds
