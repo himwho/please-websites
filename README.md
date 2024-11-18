@@ -24,13 +24,11 @@ This is a git hosted directory, all files within the "creation-files/" folder of
   - finish js
   - format
 - heatedmammories
-  - edit together content (brendan)
+  - edit together content
 - chaffedorgangster
-  - edit together content (brendan)
-- toomuchspaghetti
-  - edit together content (brendan)
+  - edit together content
+- plentyofspaghetti
 - notenoughspaghetti
-  - edit together content (brendan)
 - teenagemutantninjahurdles
   - add analytics
 - menacingminstrel

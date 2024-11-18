@@ -24,6 +24,7 @@ MAOXUEDONG = please-maoxuedong.com-public
 HEATEDMAMMARIES = please-heatedmammaries.com-public
 NOTENOUGHSPAGHETTI = please-notenoughspaghetti.com-public
 PLENTYSPAGHETTI = please-plentyofspaghetti.com-public
+ANTIVIRAL = please-antiviral.life-public
 
 # getting OS type
 ifeq ($(OS),Windows_NT)
@@ -35,7 +36,7 @@ endif
 install: 
 	# install all deps
 
-all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter ios8poems stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod maoxuedong
+all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod maoxuedong heatedmammaries notenoughspaghetti plentyspaghetti antiviral
 
 please:
 	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --profile personal
@@ -113,3 +114,5 @@ plentyspaghetti:
 	cd plentyofspaghetti.com && npm run build
 	aws s3 sync plentyofspaghetti.com/dist s3://$(PLENTYSPAGHETTI) --cache-control no-cache --exclude '.DS_Store' --profile personal
 
+antiviral:
+	aws s3 sync antiviral.life/ s3://$(ANTIVIRAL) --cache-control no-cache --exclude '.DS_Store' --profile personal
