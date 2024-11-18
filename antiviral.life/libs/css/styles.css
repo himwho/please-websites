@@ -1,0 +1,90 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow: hidden;
+  background-image: url('/images/desktop.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+#image-container {
+  position: absolute;
+}
+
+#text-container {
+  position: absolute;
+  font-size: 24px;
+  color: white;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+img.explosion {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  z-index: 1000;
+}
+
+img {
+  position: absolute;
+  transition: transform 0.2s;
+}
+
+.hidden-cursor {
+  pointer-events: none;
+  cursor: none !important;
+}
+
+.window {
+  transition: opacity 0.5s;
+  z-index: 1000;
+  background: white;
+  position: absolute;
+  display: inline-block;
+  user-select: none;
+}
+
+.window-body {
+  margin: 0;
+  padding: 8px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.window-body img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  margin: 0;
+  position: relative;
+  left: 0;
+  top: 0;
+}
+
+.title-bar {
+  cursor: move;
+  position: relative;
+  z-index: 1001;
+}
+
+.title-bar-controls {
+  position: relative;
+  z-index: 1002;
+}
+
+.title-bar-controls button {
+  cursor: pointer;
+}

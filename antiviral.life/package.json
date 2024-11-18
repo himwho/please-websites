@@ -1,0 +1,18 @@
+{
+  "name": "antiviral.life",
+  "version": "1.0.0",
+  "main": "index.html",
+  "scripts": {
+    "clean": "rm -rf node_modules",
+    "start": "browser-sync start --server --files '*.html, libs/**/*.css, libs/**/*.js'"
+  },
+  "author": "please",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}
