@@ -109,10 +109,12 @@ function spawnRandomImage() {
   container.appendChild(popup);
 }
 
-// Add new click handler for explosions
+// Update the click handler for explosions
 document.body.addEventListener('click', (e) => {
-  // Only spawn explosion if we're not clicking on a window
-  if (!e.target.closest('.window')) {
+  // Only spawn explosion if we're not clicking on a window, taskbar, or start menu
+  if (!e.target.closest('.window') && 
+      !e.target.closest('.taskbar') && 
+      !e.target.closest('.start-menu')) {
     spawnExplosion(e.clientX, e.clientY);
     decreaseSpawnDelay();
   }
