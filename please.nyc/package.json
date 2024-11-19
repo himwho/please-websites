@@ -13,6 +13,6 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.14"
+    "browser-sync": "^2.27.11"
   }
 }
