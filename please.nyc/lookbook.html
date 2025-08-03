@@ -1,0 +1,205 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>PLEASE - Lookbook</title>
+        <meta name="description" content="PLEASE NYC Lookbook">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="css/lookbook.css">
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Full Screen Background Video -->
+        <video autoplay muted loop playsinline class="background-video">
+            <source src="lookbook/promo/x_end.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="film-grain"></div>
+        <div class="video-overlay-subtle"></div>
+
+        <header class="handmade-header">
+            <div class="instruction-hint">drag photos to rearrange</div>
+            <div class="back-arrow">
+                <a href="index.html">← back to main</a>
+            </div>
+        </header>
+
+        <main class="photo-gallery">
+            <!-- Photo 1 -->
+            <div class="polaroid" data-photo="1" style="--random-rotate: -3deg; --random-x: 5%; --random-y: 15%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_5452.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-top"></div>
+                </div>
+                <div class="photo-caption">first looks</div>
+            </div>
+
+            <!-- Photo 2 -->
+            <div class="polaroid" data-photo="2" style="--random-rotate: 2deg; --random-x: 25%; --random-y: 8%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6224.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-corner"></div>
+                </div>
+                <div class="photo-caption">street style</div>
+            </div>
+
+            <!-- Photo 3 -->
+            <div class="polaroid" data-photo="3" style="--random-rotate: -1deg; --random-x: 45%; --random-y: 20%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6237.jpeg" alt="PLEASE lookbook photo">
+                    <div class="pushpin"></div>
+                </div>
+                <div class="photo-caption">details matter</div>
+            </div>
+
+            <!-- Photo 4 -->
+            <div class="polaroid" data-photo="4" style="--random-rotate: 4deg; --random-x: 70%; --random-y: 12%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6246.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-side"></div>
+                </div>
+                <div class="photo-caption">nyc vibes</div>
+            </div>
+
+            <!-- Photo 5 -->
+            <div class="polaroid" data-photo="5" style="--random-rotate: -2deg; --random-x: 15%; --random-y: 45%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6249.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-diagonal"></div>
+                </div>
+                <div class="photo-caption">candid moments</div>
+            </div>
+
+            <!-- Photo 6 -->
+            <div class="polaroid" data-photo="6" style="--random-rotate: 1deg; --random-x: 40%; --random-y: 50%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6257.jpeg" alt="PLEASE lookbook photo">
+                    <div class="pushpin pushpin-red"></div>
+                </div>
+                <div class="photo-caption">everyday wear</div>
+            </div>
+
+            <!-- Photo 7 -->
+            <div class="polaroid" data-photo="7" style="--random-rotate: -4deg; --random-x: 65%; --random-y: 48%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6271.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-cross"></div>
+                </div>
+                <div class="photo-caption">in the wild</div>
+            </div>
+
+            <!-- Photo 8 -->
+            <div class="polaroid" data-photo="8" style="--random-rotate: 3deg; --random-x: 20%; --random-y: 75%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6297.jpeg" alt="PLEASE lookbook photo">
+                    <div class="tape tape-top"></div>
+                </div>
+                <div class="photo-caption">city scenes</div>
+            </div>
+
+            <!-- Photo 9 -->
+            <div class="polaroid" data-photo="9" style="--random-rotate: -1deg; --random-x: 50%; --random-y: 80%;">
+                <div class="photo-frame">
+                    <img src="lookbook/promo/IMG_6450.jpeg" alt="PLEASE lookbook photo">
+                    <div class="pushpin pushpin-blue"></div>
+                </div>
+                <div class="photo-caption">final frame</div>
+            </div>
+
+        </main>
+
+        <script>
+            let draggedElement = null;
+            let initialMousePos = { x: 0, y: 0 };
+            let initialElementPos = { x: 0, y: 0 };
+
+            // No scroll effects needed since page doesn't scroll
+
+            // Drag functionality
+            function initializeDragging() {
+                const polaroids = document.querySelectorAll('.polaroid');
+                
+                polaroids.forEach(polaroid => {
+                    // Mouse events
+                    polaroid.addEventListener('mousedown', startDrag);
+                    
+                    // Touch events for mobile
+                    polaroid.addEventListener('touchstart', startDrag, { passive: false });
+                    
+                    // Double-click to enlarge (since single click is now for dragging)
+                    polaroid.addEventListener('dblclick', function() {
+                        this.classList.toggle('enlarged');
+                    });
+                });
+
+                // Global mouse/touch move and up events
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', endDrag);
+                document.addEventListener('touchmove', drag, { passive: false });
+                document.addEventListener('touchend', endDrag);
+            }
+
+            function startDrag(e) {
+                e.preventDefault();
+                draggedElement = e.currentTarget;
+                draggedElement.classList.add('dragging');
+                
+                const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+                
+                initialMousePos = { x: clientX, y: clientY };
+                
+                const rect = draggedElement.getBoundingClientRect();
+                initialElementPos = { 
+                    x: rect.left + window.pageXOffset, 
+                    y: rect.top + window.pageYOffset 
+                };
+                
+                draggedElement.style.zIndex = '1000';
+                draggedElement.style.cursor = 'grabbing';
+            }
+
+            function drag(e) {
+                if (!draggedElement) return;
+                e.preventDefault();
+                
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                
+                const deltaX = clientX - initialMousePos.x;
+                const deltaY = clientY - initialMousePos.y;
+                
+                const newX = initialElementPos.x + deltaX;
+                const newY = initialElementPos.y + deltaY;
+                
+                draggedElement.style.left = `${newX}px`;
+                draggedElement.style.top = `${newY}px`;
+                draggedElement.style.transform = `rotate(var(--random-rotate))`;
+            }
+
+            function endDrag(e) {
+                if (!draggedElement) return;
+                
+                draggedElement.classList.remove('dragging');
+                draggedElement.style.zIndex = '';
+                draggedElement.style.cursor = 'grab';
+                draggedElement = null;
+            }
+
+            // Random subtle animations on load
+            document.addEventListener('DOMContentLoaded', function() {
+                const polaroids = document.querySelectorAll('.polaroid');
+                polaroids.forEach((polaroid, index) => {
+                    setTimeout(() => {
+                        polaroid.classList.add('fade-in');
+                    }, index * 200);
+                });
+                
+                // Initialize dragging after elements are loaded
+                initializeDragging();
+            });
+        </script>
+    </body>
+</html> 
