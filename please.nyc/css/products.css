@@ -760,6 +760,11 @@ body {
         min-height: 350px;
     }
     
+    .product-cutout.horizontal {
+        max-width: 100%;
+        aspect-ratio: 4/3;
+    }
+    
     .product-cutout.horizontal .carousel-images {
         min-height: 250px;
     }
@@ -786,15 +791,19 @@ body {
         padding: 6px 10px;
     }
     
+    /* Improved touch targets for tablet/mobile */
     .carousel-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
     }
     
     .dot {
         width: 10px;
         height: 10px;
+        /* Better touch targets */
+        padding: 6px;
+        margin: -6px;
     }
     
     .dot::before {
@@ -806,6 +815,28 @@ body {
         width: 6px;
         height: 6px;
     }
+    
+    /* Improved quantity controls for tablet */
+    .quantity-controls {
+        gap: 10px;
+        padding: 10px;
+        margin-top: 12px;
+    }
+    
+    .qty-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+        border: 2px solid #333;
+        /* Better visual feedback for touch */
+        -webkit-tap-highlight-color: rgba(255, 235, 59, 0.3);
+    }
+    
+    .quantity {
+        font-size: 16px;
+        padding: 6px 10px;
+        min-width: 35px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -813,6 +844,10 @@ body {
     .horizontal-products {
         grid-template-columns: 1fr;
         gap: 25px;
+        padding: 20px 20px;
+        /* Ensure no horizontal overflow */
+        max-width: 100vw;
+        box-sizing: border-box;
     }
     
     .product-cutout.vertical {
@@ -825,7 +860,10 @@ body {
     }
     
     .product-cutout.horizontal {
+        max-width: calc(100vw - 40px);
+        width: 100%;
         aspect-ratio: 4/3;
+        box-sizing: border-box;
     }
     
     .product-cutout.horizontal .carousel-images {
@@ -841,28 +879,34 @@ body {
     }
     
     .carousel-btn {
-        width: 26px;
-        height: 26px;
-        font-size: 14px;
+        width: 44px;
+        height: 44px;
+        font-size: 18px;
+        /* Remove rotation on mobile for better tap accuracy */
+        transform: none !important;
     }
     
     .carousel-controls {
-        padding: 0 2px;
+        padding: 0 5px;
+        margin-top: 12px;
     }
     
     .dot {
-        width: 8px;
-        height: 8px;
+        width: 12px;
+        height: 12px;
+        /* Larger touch targets for dots */
+        padding: 8px;
+        margin: -8px;
     }
     
     .dot::before {
-        width: 4px;
-        height: 4px;
+        width: 6px;
+        height: 6px;
     }
     
     .dot.active::before {
-        width: 5px;
-        height: 5px;
+        width: 8px;
+        height: 8px;
     }
     
     .cart-tab {
@@ -875,26 +919,96 @@ body {
     .cart-sidebar {
         width: 100vw;
         right: -100vw;
+        padding: 15px;
     }
     
     .cart-sidebar.open {
         right: 0;
     }
     
+    /* Improve cart buttons for mobile */
+    .cart-qty-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 16px;
+        border: 2px solid #333;
+        -webkit-tap-highlight-color: rgba(255, 235, 59, 0.3);
+    }
+    
+    .cart-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .clear-cart-btn,
+    .submit-order-btn {
+        padding: 15px 20px;
+        font-size: 18px;
+        border: 3px solid #333;
+        /* Remove rotations for better mobile interaction */
+        transform: none !important;
+        width: 100%;
+    }
+    
+    .close-cart {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        /* Remove rotation for better mobile tapping */
+        transform: none !important;
+    }
+    
+    /* Improved quantity controls for mobile */
     .quantity-controls {
-        gap: 8px;
-        padding: 6px;
+        gap: 12px;
+        padding: 12px;
+        margin-top: 15px;
+        /* Remove rotation on mobile for better touch accuracy */
+        transform: none !important;
+        background: rgba(255,255,255,0.95);
+        border: 3px solid #333;
     }
     
     .qty-btn {
-        width: 28px;
-        height: 28px;
-        font-size: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+        /* Remove rotations on mobile for better tap accuracy */
+        transform: none !important;
+        border: 3px solid #333;
+        /* Better visual feedback for touch */
+        -webkit-tap-highlight-color: rgba(255, 235, 59, 0.3);
+    }
+    
+    .qty-btn:hover,
+    .qty-btn:focus,
+    .qty-btn:active {
+        /* Mobile-specific states */
+        background: #ffeb3b;
+        transform: none !important;
+        outline: none;
     }
     
     .quantity {
-        font-size: 16px;
-        padding: 3px 6px;
+        font-size: 18px;
+        padding: 8px 12px;
+        min-width: 40px;
+        border: 3px solid #333;
+        font-weight: bold;
+    }
+    
+    /* Remove problematic transforms on mobile */
+    .product-cutout {
+        transform: none !important;
+        /* Ensure consistent positioning */
+        position: relative;
+        left: 0 !important;
+        top: 0 !important;
+    }
+    
+    .product-cutout:hover {
+        transform: none !important;
+        animation: none;
     }
 }
 
@@ -927,6 +1041,55 @@ body {
 
 .product-cutout:hover {
     animation: slight-wobble 2s ease-in-out infinite;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* This targets touch devices specifically */
+    
+    .qty-btn,
+    .carousel-btn,
+    .cart-qty-btn,
+    .close-cart,
+    .clear-cart-btn,
+    .submit-order-btn,
+    .cart-tab {
+        /* Improve touch feedback */
+        -webkit-tap-highlight-color: rgba(255, 235, 59, 0.4);
+        user-select: none;
+        -webkit-user-select: none;
+        /* Prevent callout on long press */
+        -webkit-touch-callout: none;
+    }
+    
+    .qty-btn:active,
+    .carousel-btn:active,
+    .cart-qty-btn:active {
+        background: #ffeb3b !important;
+        transform: scale(0.95) !important;
+    }
+    
+    .close-cart:active {
+        background: #ff5252 !important;
+    }
+    
+    .submit-order-btn:active {
+        background: #45a049 !important;
+    }
+    
+    .clear-cart-btn:active {
+        background: #f0f0f0 !important;
+    }
+    
+    /* Prevent text selection on interactive elements */
+    .product-cutout,
+    .carousel-controls,
+    .quantity-controls {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
 }
 
 /* Print styles */
