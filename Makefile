@@ -25,6 +25,7 @@ HEATEDMAMMARIES = please-heatedmammaries.com-public
 NOTENOUGHSPAGHETTI = please-notenoughspaghetti.com-public
 PLENTYSPAGHETTI = please-plentyofspaghetti.com-public
 ANTIVIRAL = please-antiviral.life-public
+CORNHUB = please-cornhub.world-public
 
 # getting OS type
 ifeq ($(OS),Windows_NT)
@@ -116,3 +117,6 @@ plentyspaghetti:
 
 antiviral:
 	aws s3 sync antiviral.life/ s3://$(ANTIVIRAL) --cache-control no-cache --exclude '.DS_Store' --profile personal
+
+cornhub:
+	aws s3 sync cornhub.world/ s3://$(CORNHUB) --cache-control no-cache --exclude '.DS_Store' --profile personal

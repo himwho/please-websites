@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class='no-js' lang='en'>
+	<!--<![endif]-->
+	<head>
+		<meta charset='utf-8' />
+		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+		<title>CORNHUB.WORLD  |  Where corn meets the world</title>
+		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
+		<link rel="stylesheet" href="/lib/css/style.css" type="text/css" />
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+	</head>
+	<body>
+		<div id="start" class="start">
+			<input class="fullscreen" type="button" value="ENTER THE CORN" id="button" />
+		</div>
+		<div id="main-container" class="container">
+
+			<!-- The video -->
+			<video loop id="cornVideo" poster="/lib/images/cornhub-poster.jpg">
+				<source src="/lib/video/cornhub.webm" type="video/webm">
+			    <source src="/lib/video/cornhub.mp4" type="video/mp4">
+			    <source src="/lib/video/cornhub.ogv" type="video/ogg">
+				<img src="/lib/images/cornhub-poster.jpg" width="640" height="360" alt="cornhub poster">
+			</video>
+
+			<script type="text/javascript">
+			var video = document.getElementById("cornVideo");
+			var curtain = document.getElementById("button");
+			$(function() {
+			    $('#button').click(function() {
+			        $('#main-container').animate({opacity: 0}, 250, function() {
+					    $(this).animate({opacity: 1}, 250);
+					});
+					$('#start').animate({opacity: 1}, 250, function() {
+					    $(this).animate({opacity: 0}, 250);
+					});
+			        $("#start").css("z-index", '0');
+			        video.play();
+			    });
+			});
+			</script>
+		</div>
+  	</body>
+</html>
