@@ -61,3 +61,14 @@ This is a git hosted directory, all files within the "creation-files/" folder of
  - make a new `CloudFront Distribution` with the `Origin Domain Name` = URL from `Static website hosting`, `Redirect HTTP to HTTPS`, `Alternate Domain Names (CNAMEs)` = [website-domain], `Custom SSL Certificate` = certificate from `Certificate Manager`
  - add new `alias` record to domain on `Route 53` with the target link pointing to the `CloudFront Distribution URL` 
  - test it!
+
+## Subdomains of please.nyc
+
+`nonprofitbar.please.nyc` uses the same S3 + CloudFront setup, but it is an extra record on the existing `please.nyc` hosted zone rather than a new zone.
+
+ - create bucket `please-nonprofitbar.please.nyc-public` and follow the policy / static hosting steps above
+ - request an ACM certificate (or add a SAN) for `nonprofitbar.please.nyc`
+ - create a CloudFront distribution for that bucket with CNAME `nonprofitbar.please.nyc`
+ - in the `please.nyc` hosted zone, add alias `nonprofitbar` → that distribution
+ - deploy with `make nonprofitbar` (builds `please.nyc/nonprofitbar` then syncs `dist/`)
+ - `make please` excludes `please.nyc/nonprofitbar/` so source files never upload to the apex site

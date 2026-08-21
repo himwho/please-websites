@@ -13,6 +13,9 @@ build/Release
 node_modules
 jspm_packages
 
+# Vite build output for nonprofitbar.please.nyc
+please.nyc/nonprofitbar/dist/
+
 # Optional npm cache directory
 .npm
 

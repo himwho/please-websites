@@ -26,6 +26,7 @@ NOTENOUGHSPAGHETTI = please-notenoughspaghetti.com-public
 PLENTYSPAGHETTI = please-plentyofspaghetti.com-public
 ANTIVIRAL = please-antiviral.life-public
 CORNHUB = please-cornhub.world-public
+NONPROFITBAR = please-nonprofitbar.please.nyc-public
 
 # getting OS type
 ifeq ($(OS),Windows_NT)
@@ -40,7 +41,7 @@ install:
 all: auntcolony fuckingsarkis parallelogrammy parallelograndma genesname philorpeter stripperfarts meatgravy teenagemutantninjahurdles menacingminstrel texmexagons flamdangos mexagons tomsachsophone frenchfryangle praisecod maoxuedong heatedmammaries notenoughspaghetti plentyspaghetti antiviral
 
 please:
-	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --profile personal
+	aws s3 sync please.nyc/  s3://$(PLEASE) --cache-control no-cache --exclude '.DS_Store' --exclude 'nonprofitbar/*' --exclude 'nonprofitbar/**' --profile personal
 
 auntcolony:
 	aws s3 sync auntcolony.com/  s3://$(AUNTCOLONY) --cache-control no-cache --exclude '.DS_Store' --profile personal
@@ -120,3 +121,7 @@ antiviral:
 
 cornhub:
 	aws s3 sync cornhub.world/ s3://$(CORNHUB) --cache-control no-cache --exclude '.DS_Store' --profile personal
+
+nonprofitbar:
+	cd please.nyc/nonprofitbar && npm ci && npm run build
+	aws s3 sync please.nyc/nonprofitbar/dist s3://$(NONPROFITBAR) --cache-control no-cache --exclude '.DS_Store' --profile personal
